@@ -1,76 +1,268 @@
 openapi: '3.0.0'
 info:
   version: '1.0.0'
-  title: 'Sample API'
-  description: Buy or rent spacecrafts
+  title: 'SOS API'
+  description: Social network REST Api
+
+servers:
+  - url: http://localhost:8000/
 
 paths:
   /users:
     post:
       summary: Añadir un usuario nuevo a la red
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
       responses:
         '200':
           description: User with 'username' added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
     get:
       summary: Obtener una lista de todos los usuarios existentes en la red social. Esta lista debe permitir ser filtrada por patrón de nombre (eg. Buscar todos los usuarios que contengan “Mar” en su nombre, “Mario”, “Maria”…etc.)
+      parameters:
+        - name: q
+          in: query
+          description: Filtro de búsqueda por nombre
+          schema:
+            type: string
       responses:
         '200':
-          description: User with 'username' added
+          description: Lista de usuarios
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserList'
 
   /users/{id}:
     parameters:
-      - name: spacecraftId
-        description: The unique identifier of the spacecraft
+      - name: id
+        description: The unique identifier of the user
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/SpacecraftId'
+          $ref: '#/components/schemas/UserId'
+
     get:
       summary: Ver los datos básicos de un usuario
       responses:
         '200':
-          description: User with 'username' added
+          description: Datos del usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
 
     put:
       summary: Cambiar datos básicos de nuestro perfil de usuario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
       responses:
         '200':
-          description: User with 'username' added
+          description: Usuario actualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
     delete:
       summary: Borrar nuestro perfil de la red social
-      
+      responses:
+        '200':
+          description: Usuario eliminado
+
   /users/{id}/friends:
+    parameters:
+      - name: id
+        description: Identificador del usuario
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserId'
     post:
       summary: Añadir un nuevo amigo de entre los usuarios registrados en la red social
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Amigo añadido
+
     get:
-      summary: Obtener una lista de todos nuestros amigos. Además, esta lista debe permitir la opción de ser filtrada por el patrón de nombre o limitar la cantidad de información obtenida por número de amigos (e.g. los 10 primeros elementos, los elementos entre el 11 y el 20, etc.)
-      
+      summary: Obtener una lista de todos nuestros amigos, permite la opción de ser filtrada por el patrón de nombre o limitar la cantidad de información obtenida por número de amigos
+      parameters:
+        - name: q
+          in: query
+          description: Filtro de búsqueda por nombre
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Número máximo de amigos a devolver
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+      responses:
+        '200':
+          description: Lista de amigos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserList'
+
   /users/{id}/friends/{friend_id}:
+    parameters:
+      - name: id
+        description: Identificador del usuario
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserId'
+      - name: friend_id
+        description: Identificador de usuario del amigo
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserId'
+
     delete:
       summary: Eliminar un amigo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Amigo eliminado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserList'
       
   /users/{id}/messages:
+    parameters:
+      - name: id
+        description: Identificador del usuario
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserId'
     post:
       summary: Un usuario puede publicar un nuevo mensaje en su página personal
+      responses:
+        '200':
+          description: Amigo eliminado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserList'
     get:
-      summary: Obtener una lista de todos los mensajes escritos por un usuario en su página personal. Además, esta lista debe permitir la opción de ser filtrada por fecha o limitar la cantidad de información obtenida por número (e.g. los 10 primeros elementos, los elementos entre el 11 y el 20, etc.)
-      
+      summary: Obtener una lista de todos los mensajes escritos por un usuario en su página personal. Además, esta lista debe permitir la opción de ser filtrada por fecha o limitar la cantidad de información obtenida por número 
+      responses:
+        '200':
+          description: Amigo eliminado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserList'
   /users/{id}/messages/{message_id}:
+    parameters:
+      - name: id
+        description: Identificador del usuario
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserId'
+
+      - name: message_id
+        description: Identificador del mensaje
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserId'
+
     put:
       summary: Un usuario puede editar un mensaje de su página personal
+      responses:
+        '200':
+          description: Amigo eliminado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserList'
     delete:
       summary: Un usuario puede eliminar un mensaje de su página personal
+      responses:
+        '200':
+          description: Amigo eliminado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserList'
     get:
       summary: Obtener detalles sobre un mensaje específico
+      responses:
+        '200':
+          description: Amigo eliminado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserList'
       
   /users/{id}/messages/friends:
+    parameters:
+      - name: id
+        description: Identificador del usuario
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserId'
     get:
       summary: Consultar los últimos mensajes publicados de nuestros amigos en su página personal obtener una lista de los últimos mensajes de todos mis amigos, pudiendo filtrar estos mensajes por fecha (último antes de cierta fecha). Poder limitar la cantidad de información obtenida por número.
-      
+      responses:
+        '200':
+          description: Amigo eliminado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserList'
   /users/{id}/messages/friends/search:
+    parameters:
+      - name: id
+        description: Identificador del usuario
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserId'
     get:
       summary: Buscar en todos los mensajes de nuestros amigos por contenido –contiene un determinado texto-. Poder limitar la cantidad de información obtenida por número.
-
+      responses:
+        '200':
+          description: Amigo eliminado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserList'
   /description:
     get:
       summary: Consultar fácilmente la descripción necesaria para una aplicación móvil que queremos realizar, que muestre los datos básicos de un usuario, su último mensaje de su página, el número de amigos y los mensajes de sus 10 últimos amigos que se han actualizado (escritos por ellos mismos en su página personal de la red social)
+      responses:
+        '200':
+          description: Amigo eliminado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserList'
