@@ -1,6 +1,6 @@
 openapi: "3.0.0"
 info:
-    version: "1.0.1"
+    version: "1.0.2"
     title: "SOS API"
     description: Social network REST Api
 servers:
@@ -284,7 +284,7 @@ paths:
                     description: Unauthorized
                 "403":
                     description: Forbidden
-        
+
     /users/{id}/messages/friends:
         parameters:
             - name: id
@@ -338,67 +338,80 @@ paths:
                 "403":
                     description: Forbidden
 components:
-  schemas:
-    User:
-      type: object
-      properties:
-        userId:
-          type: string
-          description: The unique identifier for the user.
-        name:
-          type: string
-          description: The name of the user.
-        email:
-          type: string
-          format: email
-          description: The email address of the user.
-        age:
-          type: integer
-          description: The age of the user.
-      required:
-        - userId
-        - name
-        - email
-        - age
-    UserId:
-      type: object
-      properties:
-        userId:
-          type: string
-          description: The unique identifier for the user.
-      required:
-        - userId
-    UserList:
-      type: object
-      properties:
-        users:
-          type: array
-          items:
-            $ref: "#/components/schemas/UserId"
-      required:
-        - users
-    Message:
-        type: object
-        properties:
-            messageId:
-                type: string
-                description: The unique identifier for the post.
-            author:
-                $ref: "#/components/schemas/UserId"
-                description: The user that posted the message.
-            receiver:
-                $ref: "#/components/schemas/UserId"
-                description: The user that received the message.
-            message:
-                type: string
-                maximum: 256
-                description: The 256 chars message.
-            time:
-                type: string
-                format: date-time
-                description: The moment the message was posted.
-        required:
-            - messageId
-            - author
-            - message
-            - time
+    schemas:
+        User:
+            type: object
+            properties:
+                userId:
+                    $ref: "#/components/schemas/UserId"
+                    description: The unique identifier for the user.
+                name:
+                    type: string
+                    description: The name of the user.
+                email:
+                    type: string
+                    format: email
+                    description: The email address of the user.
+                age:
+                    type: integer
+                    description: The age of the user.
+            required:
+                - userId
+                - name
+                - email
+                - age
+
+        UserId:
+            type: object
+            properties:
+                userId:
+                    type: string
+                    description: The unique identifier for the user.
+            required:
+                - userId
+
+        UserList:
+            type: object
+            properties:
+                users:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/UserId"
+            required:
+                - users
+
+        Message:
+            type: object
+            properties:
+                messageId:
+                    $ref: "#/components/schemas/MessageId"
+                    description: The unique identifier for the post.
+                author:
+                    $ref: "#/components/schemas/UserId"
+                    description: The user that posted the message.
+                receiver:
+                    $ref: "#/components/schemas/UserId"
+                    description: The user that received the message.
+                message:
+                    type: string
+                    maximum: 256
+                    description: The 256 chars message.
+                time:
+                    type: string
+                    format: date-time
+                    description: The moment the message was posted.
+            required:
+                - messageId
+                - author
+                - receiver
+                - message
+                - time
+
+        MessageId:
+            type: object
+            properties:
+                messageId:
+                    type: string
+                    description: The unique identifier for the message.
+            required:
+                - messageId
