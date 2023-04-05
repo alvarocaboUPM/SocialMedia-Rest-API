@@ -1,0 +1,1218 @@
+{
+	"info": {
+		"_postman_id": "415f201b-1f97-43b2-acd7-8aa2128c3539",
+		"name": "SOS API",
+		"description": "Social network REST Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "23667119-415f201b-1f97-43b2-acd7-8aa2128c3539"
+	},
+	"item": [
+		{
+			"name": "Añadir un usuario nuevo a la red",
+			"id": "4c7ec560-60ee-4a89-a58e-3cbfbde19406",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userId\": \"<string>\",\n\t\"name\": \"<string>\",\n\t\"email\": \"<email>\",\n\t\"age\": \"<integer>\"\n}",
+					"options": {
+						"raw": {
+							"headerFamily": "json",
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "57941c13-464c-45c5-bb8b-63f7d2c7af12",
+					"name": "User with 'username' added",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userId\": \"<string>\",\n\t\"name\": \"<string>\",\n\t\"email\": \"<email>\",\n\t\"age\": \"<integer>\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n\t\"userId\": \"<string>\",\n\t\"name\": \"<string>\",\n\t\"email\": \"<email>\",\n\t\"age\": \"<integer>\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Obtener una lista de todos los usuarios existentes en la red social.",
+			"id": "9101d749-fc2a-48b5-8cd2-e9145bdb94ef",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users?q=<string>",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"description": "Filtro de búsqueda por nombre",
+							"key": "q",
+							"value": "<string>"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "14cf68d4-97df-49da-9064-12f9a311ff31",
+					"name": "Lista de usuarios",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users?q=<string>",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"description": "Filtro de búsqueda por nombre",
+									"key": "q",
+									"value": "<string>"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n\t\"users\": [\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t}\n\t]\n}"
+				}
+			]
+		},
+		{
+			"name": "Ver los datos básicos de un usuario",
+			"id": "20578fe3-dde7-491d-a9a4-0d63d0e410b7",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users/:id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "userId,<string>"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "8ba641ff-3483-47be-8778-e82d66ce9b23",
+					"name": "Datos del usuario",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n\t\"userId\": \"<string>\",\n\t\"name\": \"<string>\",\n\t\"email\": \"<email>\",\n\t\"age\": \"<integer>\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Cambiar datos básicos de nuestro perfil de usuario",
+			"id": "d9cdf2cd-2a25-43c9-af80-a99cc11db124",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userId\": \"<string>\",\n\t\"name\": \"<string>\",\n\t\"email\": \"<email>\",\n\t\"age\": \"<integer>\"\n}",
+					"options": {
+						"raw": {
+							"headerFamily": "json",
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/:id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "userId,<string>"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "a785fb64-9735-47ec-9f85-ed77d4c5bf7e",
+					"name": "Usuario actualizado",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userId\": \"<string>\",\n\t\"name\": \"<string>\",\n\t\"email\": \"<email>\",\n\t\"age\": \"<integer>\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n\t\"userId\": \"<string>\",\n\t\"name\": \"<string>\",\n\t\"email\": \"<email>\",\n\t\"age\": \"<integer>\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Borrar nuestro perfil de la red social",
+			"id": "36e0fa82-d91c-49ec-b723-de915ddad54f",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users/:id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "userId,<string>"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "f0dcc296-2d93-4f7a-b5b0-a2aa6a8eef02",
+					"name": "Usuario eliminado",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n\t\"userId\": \"<string>\",\n\t\"name\": \"<string>\",\n\t\"email\": \"<email>\",\n\t\"age\": \"<integer>\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Añadir un nuevo amigo de entre los usuarios registrados en la red social",
+			"id": "76ebacea-a798-4a0e-a4dc-04ca582c9670",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userId\": \"<string>\",\n\t\"name\": \"<string>\",\n\t\"email\": \"<email>\",\n\t\"age\": \"<integer>\"\n}",
+					"options": {
+						"raw": {
+							"headerFamily": "json",
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/:id/friends",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":id",
+						"friends"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "userId,<string>"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "69d793fc-d3ae-4f90-bb72-e5591a6ae465",
+					"name": "Amigo añadido",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userId\": \"<string>\",\n\t\"name\": \"<string>\",\n\t\"email\": \"<email>\",\n\t\"age\": \"<integer>\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:id/friends",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":id",
+								"friends"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [],
+					"cookie": []
+				}
+			]
+		},
+		{
+			"name": "Listado de amigos",
+			"id": "b5c136a0-1a14-4544-bd0b-ce317b130ac7",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users/:id/friends?q=<string>&limit=<integer>",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":id",
+						"friends"
+					],
+					"query": [
+						{
+							"description": "Filtro de búsqueda por nombre",
+							"key": "q",
+							"value": "<string>"
+						},
+						{
+							"description": "Número máximo de amigos a devolver",
+							"key": "limit",
+							"value": "<integer>"
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "userId,<string>"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "fe5a1da5-e86e-4fc2-a5e8-2f2ce874d1fa",
+					"name": "Lista de amigos",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:id/friends?q=<string>&limit=<integer>",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":id",
+								"friends"
+							],
+							"query": [
+								{
+									"description": "Filtro de búsqueda por nombre",
+									"key": "q",
+									"value": "<string>"
+								},
+								{
+									"description": "Número máximo de amigos a devolver",
+									"key": "limit",
+									"value": "<integer>"
+								}
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n\t\"users\": [\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t}\n\t]\n}"
+				}
+			]
+		},
+		{
+			"name": "Eliminar un amigo",
+			"id": "5a4063b2-291d-408e-8418-ea5877d11de0",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userId\": \"<string>\",\n\t\"name\": \"<string>\",\n\t\"email\": \"<email>\",\n\t\"age\": \"<integer>\"\n}",
+					"options": {
+						"raw": {
+							"headerFamily": "json",
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/:id/friends/:friend_id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":id",
+						"friends",
+						":friend_id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "userId,<string>"
+						},
+						{
+							"key": "friend_id",
+							"value": "userId,<string>"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "5162d766-baff-4865-bd90-ff7b6913afc2",
+					"name": "Amigo eliminado",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userId\": \"<string>\",\n\t\"name\": \"<string>\",\n\t\"email\": \"<email>\",\n\t\"age\": \"<integer>\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:id/friends/:friend_id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":id",
+								"friends",
+								":friend_id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								},
+								{
+									"key": "friend_id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n\t\"users\": [\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t}\n\t]\n}"
+				}
+			]
+		},
+		{
+			"name": "Un usuario puede publicar un nuevo mensaje en su página personal",
+			"id": "47afac9a-ecaa-4b23-b64b-ddb945e9303e",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users/:id/messages",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":id",
+						"messages"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "userId,<string>"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "3c4c8e4f-af18-4bb3-b489-316b16881de6",
+					"name": "Amigo eliminado",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:id/messages",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":id",
+								"messages"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n\t\"users\": [\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t}\n\t]\n}"
+				}
+			]
+		},
+		{
+			"name": "Obtener una lista de todos los mensajes escritos por un usuario en su página personal. Además, esta lista debe permitir la opción de ser filtrada por fecha o limitar la cantidad de información obtenida por número",
+			"id": "8ce87063-6a17-43de-a5cc-c1bc25425d97",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users/:id/messages",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":id",
+						"messages"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "userId,<string>"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "a46bbbbe-72e8-4bb9-96fc-008410cd07af",
+					"name": "Amigo eliminado",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:id/messages",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":id",
+								"messages"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n\t\"users\": [\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t}\n\t]\n}"
+				}
+			]
+		},
+		{
+			"name": "Obtener detalles sobre un mensaje específico",
+			"id": "692ae39f-31bf-4d4f-8e72-d31b856240b2",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users/:id/messages/:message_id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":id",
+						"messages",
+						":message_id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "userId,<string>"
+						},
+						{
+							"key": "message_id",
+							"value": "userId,<string>"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "d0f8a14e-9450-4a0a-81db-fb75e55f3969",
+					"name": "Amigo eliminado",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:id/messages/:message_id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":id",
+								"messages",
+								":message_id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								},
+								{
+									"key": "message_id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n\t\"users\": [\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t}\n\t]\n}"
+				}
+			]
+		},
+		{
+			"name": "Un usuario puede editar un mensaje de su página personal",
+			"id": "0183fa7b-07a1-485c-bca3-30b86f409e9c",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users/:id/messages/:message_id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":id",
+						"messages",
+						":message_id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "userId,<string>"
+						},
+						{
+							"key": "message_id",
+							"value": "userId,<string>"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "739d0157-6213-45c5-8dae-92e88077b922",
+					"name": "Amigo eliminado",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:id/messages/:message_id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":id",
+								"messages",
+								":message_id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								},
+								{
+									"key": "message_id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n\t\"users\": [\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t}\n\t]\n}"
+				}
+			]
+		},
+		{
+			"name": "Un usuario puede eliminar un mensaje de su página personal",
+			"id": "b8969680-9e78-4d61-b2d9-95ca2cd422a8",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users/:id/messages/:message_id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":id",
+						"messages",
+						":message_id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "userId,<string>"
+						},
+						{
+							"key": "message_id",
+							"value": "userId,<string>"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "f24eff97-4b5f-40b2-a343-b6051be641d4",
+					"name": "Amigo eliminado",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:id/messages/:message_id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":id",
+								"messages",
+								":message_id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								},
+								{
+									"key": "message_id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n\t\"users\": [\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t}\n\t]\n}"
+				}
+			]
+		},
+		{
+			"name": "Consultar los últimos mensajes publicados de nuestros amigos en su página personal obtener una lista de los últimos mensajes de todos mis amigos, pudiendo filtrar estos mensajes por fecha (último antes de cierta fecha). Poder limitar la cantidad de inform",
+			"id": "790a5498-c012-40f7-b0dd-f5a2765fe93e",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users/:id/messages/friends",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":id",
+						"messages",
+						"friends"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "userId,<string>"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "55201d60-974f-46d5-a1c6-26404c68cc55",
+					"name": "Amigo eliminado",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:id/messages/friends",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":id",
+								"messages",
+								"friends"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n\t\"users\": [\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t}\n\t]\n}"
+				}
+			]
+		},
+		{
+			"name": "Buscar en todos los mensajes de nuestros amigos por contenido –contiene un determinado texto-. Poder limitar la cantidad de información obtenida por número.",
+			"id": "15c5faf7-cc80-4762-a1bf-e7c3dbd1dbd8",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users/:id/messages/friends/search",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":id",
+						"messages",
+						"friends",
+						"search"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "userId,<string>"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "14fdca89-b04a-41a1-83b5-52d989bd302d",
+					"name": "Amigo eliminado",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:id/messages/friends/search",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":id",
+								"messages",
+								"friends",
+								"search"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n\t\"users\": [\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t}\n\t]\n}"
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"id": "4183d361-2475-4966-96aa-ee9b9a53643a",
+			"key": "baseUrl",
+			"value": "http://localhost:8000"
+		}
+	]
+}
