@@ -1,6 +1,6 @@
 openapi: "3.0.0"
 info:
-    version: "1.0.0"
+    version: "1.0.1"
     title: "SOS API"
     description: Social network REST Api
 servers:
@@ -194,7 +194,7 @@ paths:
             summary: Un usuario puede publicar un nuevo mensaje en su página personal
             responses:
                 "200":
-                    description: Amigo eliminado
+                    description: Mensaje publicado
                     content:
                         application/json:
                             schema:
@@ -377,3 +377,28 @@ components:
             $ref: "#/components/schemas/UserId"
       required:
         - users
+    Message:
+        type: object
+        properties:
+            messageId:
+                type: string
+                description: The unique identifier for the post.
+            author:
+                $ref: "#/components/schemas/UserId"
+                description: The user that posted the message.
+            receiver:
+                $ref: "#/components/schemas/UserId"
+                description: The user that received the message.
+            message:
+                type: string
+                maximum: 256
+                description: The 256 chars message.
+            time:
+                type: string
+                format: date-time
+                description: The moment the message was posted.
+        required:
+            - messageId
+            - author
+            - message
+            - time
