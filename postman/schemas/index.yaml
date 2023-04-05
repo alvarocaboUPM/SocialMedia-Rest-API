@@ -16,11 +16,15 @@ paths:
                             $ref: "#/components/schemas/User"
             responses:
                 "200":
-                    description: User with 'username' added
+                    description: User with "username" added
                     content:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/User"
+                "401":
+                    description: Unauthorized
+                "403":
+                    description: Forbidden
         get:
             summary: Obtener una lista de todos los usuarios existentes en la red social.
             parameters:
@@ -53,6 +57,14 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/User"
+                "404":
+                    description: User not found
+                "400":
+                    description: Invalid ID type supplied
+                "401":
+                    description: Unauthorized
+                "403":
+                    description: Forbidden
         put:
             summary: Cambiar datos básicos de nuestro perfil de usuario
             requestBody:
@@ -67,6 +79,14 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/User"
+                "404":
+                    description: User not found
+                "400":
+                    description: Invalid ID type supplied
+                "401":
+                    description: Unauthorized
+                "403":
+                    description: Forbidden
         delete:
             summary: Borrar nuestro perfil de la red social
             responses:
@@ -76,6 +96,15 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/User"
+                "404":
+                    description: User not found
+                "400":
+                    description: Invalid ID type supplied
+                "401":
+                    description: Unauthorized
+                "403":
+                    description: Forbidden
+
     /users/{id}/friends:
         parameters:
             - name: id
@@ -94,6 +123,14 @@ paths:
             responses:
                 "200":
                     description: Amigo añadido
+                "404":
+                    description: User not found
+                "400":
+                    description: Invalid ID type supplied
+                "401":
+                    description: Unauthorized
+                "403":
+                    description: Forbidden
         get:
             x-summary: Obtener una lista de todos nuestros amigos, permite la opción de ser filtrada por el patrón de nombre o limitar la cantidad de información obtenida por número de amigos
             summary: Listado de amigos
@@ -171,6 +208,14 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/UserList"
+                "404":
+                    description: User not found
+                "400":
+                    description: Invalid ID type supplied
+                "401":
+                    description: Unauthorized
+                "403":
+                    description: Forbidden
     /users/{id}/messages/{message_id}:
         parameters:
             - name: id
@@ -195,6 +240,14 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/UserList"
+                "404":
+                    description: User not found
+                "400":
+                    description: Invalid ID type supplied
+                "401":
+                    description: Unauthorized
+                "403":
+                    description: Forbidden
         put:
             x-summary: Editar mensaje
             summary: Un usuario puede editar un mensaje de su página personal
@@ -205,6 +258,14 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/UserList"
+                "404":
+                    description: User not found
+                "400":
+                    description: Invalid ID type supplied
+                "401":
+                    description: Unauthorized
+                "403":
+                    description: Forbidden
         delete:
             x-summary: Eliminar mensaje
             summary: Un usuario puede eliminar un mensaje de su página personal
@@ -215,6 +276,14 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/UserList"
+                "404":
+                    description: User not found
+                "400":
+                    description: Invalid ID type supplied
+                "401":
+                    description: Unauthorized
+                "403":
+                    description: Forbidden
         
     /users/{id}/messages/friends:
         parameters:
@@ -234,6 +303,14 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/UserList"
+                "404":
+                    description: User not found
+                "400":
+                    description: Invalid ID type supplied
+                "401":
+                    description: Unauthorized
+                "403":
+                    description: Forbidden
     /users/{id}/messages/friends/search:
         parameters:
             - name: id
@@ -252,6 +329,14 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/UserList"
+                "404":
+                    description: User not found
+                "400":
+                    description: Invalid ID type supplied
+                "401":
+                    description: Unauthorized
+                "403":
+                    description: Forbidden
 components:
   schemas:
     User:
