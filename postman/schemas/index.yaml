@@ -1,6 +1,6 @@
 openapi: "3.0.0"
 info:
-    version: "1.0.0"
+    version: "1.0.2"
     title: "SOS API"
     description: Social network REST Api
 servers:
@@ -16,11 +16,15 @@ paths:
                             $ref: "#/components/schemas/User"
             responses:
                 "200":
-                    description: User with 'username' added
+                    description: User with "username" added
                     content:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/User"
+                "401":
+                    description: Unauthorized
+                "403":
+                    description: Forbidden
         get:
             summary: Obtener una lista de todos los usuarios existentes en la red social.
             parameters:
@@ -53,6 +57,14 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/User"
+                "404":
+                    description: User not found
+                "400":
+                    description: Invalid ID type supplied
+                "401":
+                    description: Unauthorized
+                "403":
+                    description: Forbidden
         put:
             summary: Cambiar datos básicos de nuestro perfil de usuario
             requestBody:
@@ -67,6 +79,14 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/User"
+                "404":
+                    description: User not found
+                "400":
+                    description: Invalid ID type supplied
+                "401":
+                    description: Unauthorized
+                "403":
+                    description: Forbidden
         delete:
             summary: Borrar nuestro perfil de la red social
             responses:
@@ -76,6 +96,15 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/User"
+                "404":
+                    description: User not found
+                "400":
+                    description: Invalid ID type supplied
+                "401":
+                    description: Unauthorized
+                "403":
+                    description: Forbidden
+
     /users/{id}/friends:
         parameters:
             - name: id
@@ -94,6 +123,14 @@ paths:
             responses:
                 "200":
                     description: Amigo añadido
+                "404":
+                    description: User not found
+                "400":
+                    description: Invalid ID type supplied
+                "401":
+                    description: Unauthorized
+                "403":
+                    description: Forbidden
         get:
             x-summary: Obtener una lista de todos nuestros amigos, permite la opción de ser filtrada por el patrón de nombre o limitar la cantidad de información obtenida por número de amigos
             summary: Listado de amigos
@@ -137,14 +174,14 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/User"
+                            $ref: "#/components/schemas/UserId"
             responses:
                 "200":
                     description: Amigo eliminado
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/UserList"
+                                $ref: "#/components/schemas/User"
     /users/{id}/messages:
         parameters:
             - name: id
@@ -157,20 +194,29 @@ paths:
             summary: Un usuario puede publicar un nuevo mensaje en su página personal
             responses:
                 "200":
-                    description: Amigo eliminado
+                    description: Mensaje publicado
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/UserList"
+                                $ref: "#/components/schemas/Message"
         get:
-            summary: Obtener una lista de todos los mensajes escritos por un usuario en su página personal. Además, esta lista debe permitir la opción de ser filtrada por fecha o limitar la cantidad de información obtenida por número
+            summary: Obtener una lista de todos los mensajes escritos por un usuario en su página personal. 
+                     Además, esta lista debe permitir la opción de ser filtrada por fecha o limitar la cantidad de información obtenida por número
             responses:
                 "200":
                     description: Amigo eliminado
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/UserList"
+                                $ref: "#/components/schemas/PostList"
+                "404":
+                    description: User not found
+                "400":
+                    description: Invalid ID type supplied
+                "401":
+                    description: Unauthorized
+                "403":
+                    description: Forbidden
     /users/{id}/messages/{message_id}:
         parameters:
             - name: id
@@ -184,7 +230,7 @@ paths:
               in: path
               required: true
               schema:
-                  $ref: "#/components/schemas/UserId"
+                  $ref: "#/components/schemas/MessageId"
         get:
             x-summary: Ver mensaje
             summary: Obtener detalles sobre un mensaje específico
@@ -194,28 +240,52 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/UserList"
+                                $ref: "#/components/schemas/Message"
+                "404":
+                    description: User not found
+                "400":
+                    description: Invalid ID type supplied
+                "401":
+                    description: Unauthorized
+                "403":
+                    description: Forbidden
         put:
             x-summary: Editar mensaje
             summary: Un usuario puede editar un mensaje de su página personal
             responses:
                 "200":
-                    description: Amigo eliminado
+                    description: Mensaje editado
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/UserList"
+                                $ref: "#/components/schemas/Message"
+                "404":
+                    description: User not found
+                "400":
+                    description: Invalid ID type supplied
+                "401":
+                    description: Unauthorized
+                "403":
+                    description: Forbidden
         delete:
             x-summary: Eliminar mensaje
             summary: Un usuario puede eliminar un mensaje de su página personal
             responses:
                 "200":
-                    description: Amigo eliminado
+                    description: Mensaje eliminado
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/UserList"
-        
+                                $ref: "#/components/schemas/Message"
+                "404":
+                    description: User not found
+                "400":
+                    description: Invalid ID type supplied
+                "401":
+                    description: Unauthorized
+                "403":
+                    description: Forbidden
+
     /users/{id}/messages/friends:
         parameters:
             - name: id
@@ -234,6 +304,14 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/UserList"
+                "404":
+                    description: User not found
+                "400":
+                    description: Invalid ID type supplied
+                "401":
+                    description: Unauthorized
+                "403":
+                    description: Forbidden
     /users/{id}/messages/friends/search:
         parameters:
             - name: id
@@ -244,7 +322,13 @@ paths:
                   $ref: "#/components/schemas/UserId"
         get:
             x-summary: Buscar en mensajes de amigos
-            summary: Buscar en todos los mensajes de nuestros amigos por contenido –contiene un determinado texto-. Poder limitar la cantidad de información obtenida por número.
+            summary: Buscar en todos los mensajes de nuestros amigos por contenido. Poder limitar la cantidad de información obtenida por número.
+            parameters:
+                - name: q
+                  in: query
+                  description: Filtro de búsqueda por nombre
+                  schema:
+                      type: string
             responses:
                 "200":
                     description: Amigo eliminado
@@ -252,43 +336,99 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/UserList"
+                "404":
+                    description: User not found
+                "400":
+                    description: Invalid ID type supplied
+                "401":
+                    description: Unauthorized
+                "403":
+                    description: Forbidden
 components:
-  schemas:
-    User:
-      type: object
-      properties:
-        userId:
-          type: string
-          description: The unique identifier for the user.
-        name:
-          type: string
-          description: The name of the user.
-        email:
-          type: string
-          format: email
-          description: The email address of the user.
-        age:
-          type: integer
-          description: The age of the user.
-      required:
-        - userId
-        - name
-        - email
-        - age
-    UserId:
-      type: object
-      properties:
-        userId:
-          type: string
-          description: The unique identifier for the user.
-      required:
-        - userId
-    UserList:
-      type: object
-      properties:
-        users:
-          type: array
-          items:
-            $ref: "#/components/schemas/UserId"
-      required:
-        - users
+    schemas:
+        User:
+            type: object
+            properties:
+                userId:
+                    $ref: "#/components/schemas/UserId"
+                    description: The unique identifier for the user.
+                name:
+                    type: string
+                    description: The name of the user.
+                email:
+                    type: string
+                    format: email
+                    description: The email address of the user.
+                age:
+                    type: integer
+                    description: The age of the user.
+            required:
+                - userId
+                - name
+                - email
+                - age
+
+        UserId:
+            type: object
+            properties:
+                userId:
+                    type: string
+                    description: The unique identifier for the user.
+            required:
+                - userId
+
+        UserList:
+            type: object
+            properties:
+                users:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/UserId"
+            required:
+                - users
+
+        Message:
+            type: object
+            properties:
+                messageId:
+                    $ref: "#/components/schemas/MessageId"
+                    description: The unique identifier for the post.
+                author:
+                    $ref: "#/components/schemas/UserId"
+                    description: The user that posted the message.
+                receiver:
+                    $ref: "#/components/schemas/UserId"
+                    description: The user that received the message.
+                message:
+                    type: string
+                    maximum: 256
+                    description: The 256 chars message.
+                time:
+                    type: string
+                    format: date-time
+                    description: The moment the message was posted.
+            required:
+                - messageId
+                - author
+                - receiver
+                - message
+                - time
+
+        MessageId:
+            type: object
+            properties:
+                messageId:
+                    type: string
+                    description: The unique identifier for the message.
+            required:
+                - messageId
+
+        PostList:
+            type: object
+            properties:
+                posts:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/MessageId"
+            required:
+                - posts
