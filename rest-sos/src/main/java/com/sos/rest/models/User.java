@@ -1,5 +1,7 @@
 package com.sos.rest.models;
 
+import java.util.Set;
+
 import javax.persistence.*;
 
 @Entity
