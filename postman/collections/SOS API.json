@@ -27,7 +27,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"userId\": {\n    \"userId\": \"<string>\"\n  },\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"age\": \"<integer>\"\n}"
+					"raw": "{\n  \"userId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"age\": \"<integer>\"\n}"
 				},
 				"url": {
 					"raw": "{{baseUrl}}/users",
@@ -81,71 +81,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n  \"userId\": {\n    \"userId\": \"<string>\"\n  },\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"age\": \"<integer>\"\n}"
-				},
-				{
-					"id": "b8bca859-12af-468d-9ccb-d225762bd1eb",
-					"name": "Unauthorized",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"userId\": \"<string>\",\n\t\"name\": \"<string>\",\n\t\"email\": \"<email>\",\n\t\"age\": \"<integer>\"\n}",
-							"options": {
-								"raw": {
-									"headerFamily": "json",
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/users",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users"
-							]
-						}
-					},
-					"status": "Unauthorized",
-					"code": 401,
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": []
-				},
-				{
-					"id": "a4e61da5-fdc4-4d85-8165-df89f4a2e58e",
-					"name": "Forbidden",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"userId\": \"<string>\",\n\t\"name\": \"<string>\",\n\t\"email\": \"<email>\",\n\t\"age\": \"<integer>\"\n}",
-							"options": {
-								"raw": {
-									"headerFamily": "json",
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/users",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users"
-							]
-						}
-					},
-					"status": "Forbidden",
-					"code": 403,
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": []
+					"body": "{\n  \"userId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"age\": \"<integer>\"\n}"
 				}
 			]
 		},
@@ -206,7 +142,7 @@
 					},
 					"status": "OK",
 					"code": 200,
-					"_postman_previewlanguage": "json",
+					"_postman_previewlanguage": "Text",
 					"header": [
 						{
 							"key": "Content-Type",
@@ -214,7 +150,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n\t\"users\": [\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t}\n\t]\n}"
+					"body": "{\n  \"users\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}"
 				}
 			]
 		},
@@ -282,7 +218,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n  \"userId\": {\n    \"userId\": \"<string>\"\n  },\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"age\": \"<integer>\"\n}"
+					"body": "{\n  \"userId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"age\": \"<integer>\"\n}"
 				},
 				{
 					"id": "ebcd9b0e-a554-4245-a728-45285f5a8e8a",
@@ -308,62 +244,6 @@
 					},
 					"status": "Bad Request",
 					"code": 400,
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": []
-				},
-				{
-					"id": "b1da3ce6-9699-48a1-a49e-2e7076b0bbec",
-					"name": "Unauthorized",
-					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/users/:id",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id"
-								}
-							]
-						}
-					},
-					"status": "Unauthorized",
-					"code": 401,
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": []
-				},
-				{
-					"id": "0ff5f99c-9fb8-426f-b392-ded3cbca469e",
-					"name": "Forbidden",
-					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/users/:id",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id"
-								}
-							]
-						}
-					},
-					"status": "Forbidden",
-					"code": 403,
 					"_postman_previewlanguage": "Text",
 					"header": [],
 					"cookie": []
@@ -418,7 +298,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"userId\": {\n    \"userId\": \"<string>\"\n  },\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"age\": \"<integer>\"\n}"
+					"raw": "{\n  \"userId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"age\": \"<integer>\"\n}"
 				},
 				"url": {
 					"raw": "{{baseUrl}}/users/:id",
@@ -485,7 +365,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n  \"userId\": {\n    \"userId\": \"<string>\"\n  },\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"age\": \"<integer>\"\n}"
+					"body": "{\n  \"userId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"age\": \"<integer>\"\n}"
 				},
 				{
 					"id": "ae249185-0663-4e52-bd0b-e0dc663eeeb9",
@@ -521,82 +401,6 @@
 					},
 					"status": "Bad Request",
 					"code": 400,
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": []
-				},
-				{
-					"id": "e70510fe-ce16-47db-95e9-4308e6b44da1",
-					"name": "Unauthorized",
-					"originalRequest": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"userId\": \"<string>\",\n\t\"name\": \"<string>\",\n\t\"email\": \"<email>\",\n\t\"age\": \"<integer>\"\n}",
-							"options": {
-								"raw": {
-									"headerFamily": "json",
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/users/:id",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id"
-								}
-							]
-						}
-					},
-					"status": "Unauthorized",
-					"code": 401,
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": []
-				},
-				{
-					"id": "0b85d364-0df6-4065-8ddd-6da7d49dd443",
-					"name": "Forbidden",
-					"originalRequest": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"userId\": \"<string>\",\n\t\"name\": \"<string>\",\n\t\"email\": \"<email>\",\n\t\"age\": \"<integer>\"\n}",
-							"options": {
-								"raw": {
-									"headerFamily": "json",
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/users/:id",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id"
-								}
-							]
-						}
-					},
-					"status": "Forbidden",
-					"code": 403,
 					"_postman_previewlanguage": "Text",
 					"header": [],
 					"cookie": []
@@ -705,7 +509,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n  \"userId\": {\n    \"userId\": \"<string>\"\n  },\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"age\": \"<integer>\"\n}"
+					"body": "{\n  \"userId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"age\": \"<integer>\"\n}"
 				},
 				{
 					"id": "8b01e1cc-8f12-459d-9619-b77f33952bcc",
@@ -731,62 +535,6 @@
 					},
 					"status": "Bad Request",
 					"code": 400,
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": []
-				},
-				{
-					"id": "bb312db2-7742-4585-b55f-5dade205a08c",
-					"name": "Unauthorized",
-					"originalRequest": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/users/:id",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id"
-								}
-							]
-						}
-					},
-					"status": "Unauthorized",
-					"code": 401,
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": []
-				},
-				{
-					"id": "a9f6111c-6dfa-4f29-80c2-f3c1366acaf6",
-					"name": "Forbidden",
-					"originalRequest": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/users/:id",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id"
-								}
-							]
-						}
-					},
-					"status": "Forbidden",
-					"code": 403,
 					"_postman_previewlanguage": "Text",
 					"header": [],
 					"cookie": []
@@ -837,7 +585,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"userId\": {\n    \"userId\": \"<string>\"\n  },\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"age\": \"<integer>\"\n}"
+					"raw": "{\n  \"userId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"age\": \"<integer>\"\n}"
 				},
 				"url": {
 					"raw": "{{baseUrl}}/users/:id/friends",
@@ -937,84 +685,6 @@
 					},
 					"status": "Bad Request",
 					"code": 400,
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": []
-				},
-				{
-					"id": "e27ababf-2944-4d7d-a6ff-a7c53ad1b6bf",
-					"name": "Unauthorized",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"userId\": \"<string>\",\n\t\"name\": \"<string>\",\n\t\"email\": \"<email>\",\n\t\"age\": \"<integer>\"\n}",
-							"options": {
-								"raw": {
-									"headerFamily": "json",
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/users/:id/friends",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users",
-								":id",
-								"friends"
-							],
-							"variable": [
-								{
-									"key": "id"
-								}
-							]
-						}
-					},
-					"status": "Unauthorized",
-					"code": 401,
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": []
-				},
-				{
-					"id": "ba22980d-c13b-48c6-8828-4c09782d0411",
-					"name": "Forbidden",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"userId\": \"<string>\",\n\t\"name\": \"<string>\",\n\t\"email\": \"<email>\",\n\t\"age\": \"<integer>\"\n}",
-							"options": {
-								"raw": {
-									"headerFamily": "json",
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/users/:id/friends",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users",
-								":id",
-								"friends"
-							],
-							"variable": [
-								{
-									"key": "id"
-								}
-							]
-						}
-					},
-					"status": "Forbidden",
-					"code": 403,
 					"_postman_previewlanguage": "Text",
 					"header": [],
 					"cookie": []
@@ -1142,7 +812,7 @@
 					},
 					"status": "OK",
 					"code": 200,
-					"_postman_previewlanguage": "json",
+					"_postman_previewlanguage": "Text",
 					"header": [
 						{
 							"key": "Content-Type",
@@ -1150,7 +820,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n\t\"users\": [\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t}\n\t]\n}"
+					"body": "{\n  \"users\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}"
 				}
 			]
 		},
@@ -1174,7 +844,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"userId\": {\n    \"userId\": \"<string>\"\n  },\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"age\": \"<integer>\"\n}"
+					"raw": "<string>"
 				},
 				"url": {
 					"raw": "{{baseUrl}}/users/:id/friends/:friend_id",
@@ -1244,7 +914,7 @@
 					},
 					"status": "OK",
 					"code": 200,
-					"_postman_previewlanguage": "json",
+					"_postman_previewlanguage": "Text",
 					"header": [
 						{
 							"key": "Content-Type",
@@ -1252,7 +922,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n\t\"users\": [\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t}\n\t]\n}"
+					"body": "{\n  \"users\": [\n    {\n      \"userId\": \"<string>\"\n    },\n    {\n      \"userId\": \"<string>\"\n    }\n  ],\n  \"userId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"age\": \"<integer>\"\n}"
 				}
 			]
 		},
@@ -1314,7 +984,7 @@
 					},
 					"status": "OK",
 					"code": 200,
-					"_postman_previewlanguage": "json",
+					"_postman_previewlanguage": "Text",
 					"header": [
 						{
 							"key": "Content-Type",
@@ -1322,7 +992,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n\t\"users\": [\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t}\n\t]\n}"
+					"body": "{\n  \"users\": [\n    {\n      \"userId\": \"<string>\"\n    },\n    {\n      \"userId\": \"<string>\"\n    }\n  ],\n  \"messageId\": \"<string>\",\n  \"author\": \"<string>\",\n  \"receiver\": \"<string>\",\n  \"message\": \"<string>\",\n  \"time\": \"<dateTime>\"\n}"
 				}
 			]
 		},
@@ -1384,7 +1054,7 @@
 					},
 					"status": "OK",
 					"code": 200,
-					"_postman_previewlanguage": "json",
+					"_postman_previewlanguage": "Text",
 					"header": [
 						{
 							"key": "Content-Type",
@@ -1392,7 +1062,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n\t\"users\": [\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t}\n\t]\n}"
+					"body": "{\n  \"users\": [\n    {\n      \"userId\": \"<string>\"\n    },\n    {\n      \"userId\": \"<string>\"\n    }\n  ],\n  \"posts\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}"
 				},
 				{
 					"id": "ce9bc27c-4ac3-4a6d-879b-8634e882e643",
@@ -1419,64 +1089,6 @@
 					},
 					"status": "Bad Request",
 					"code": 400,
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": []
-				},
-				{
-					"id": "ae5a1987-a2db-46c8-96eb-60bd4745b4ac",
-					"name": "Unauthorized",
-					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/users/:id/messages",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users",
-								":id",
-								"messages"
-							],
-							"variable": [
-								{
-									"key": "id"
-								}
-							]
-						}
-					},
-					"status": "Unauthorized",
-					"code": 401,
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": []
-				},
-				{
-					"id": "038dd1a2-1406-42e7-bb4d-e33b9b3dc0ba",
-					"name": "Forbidden",
-					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/users/:id/messages",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users",
-								":id",
-								"messages"
-							],
-							"variable": [
-								{
-									"key": "id"
-								}
-							]
-						}
-					},
-					"status": "Forbidden",
-					"code": 403,
 					"_postman_previewlanguage": "Text",
 					"header": [],
 					"cookie": []
@@ -1579,7 +1191,7 @@
 					},
 					"status": "OK",
 					"code": 200,
-					"_postman_previewlanguage": "json",
+					"_postman_previewlanguage": "Text",
 					"header": [
 						{
 							"key": "Content-Type",
@@ -1587,7 +1199,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n\t\"users\": [\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t}\n\t]\n}"
+					"body": "{\n  \"users\": [\n    {\n      \"userId\": \"<string>\"\n    },\n    {\n      \"userId\": \"<string>\"\n    }\n  ],\n  \"messageId\": \"<string>\",\n  \"author\": \"<string>\",\n  \"receiver\": \"<string>\",\n  \"message\": \"<string>\",\n  \"time\": \"<dateTime>\"\n}"
 				},
 				{
 					"id": "0f34aba1-95cd-421b-b6c2-533206e8c876",
@@ -1618,72 +1230,6 @@
 					},
 					"status": "Bad Request",
 					"code": 400,
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": []
-				},
-				{
-					"id": "8681a653-283e-4167-9fe1-e8db75e81639",
-					"name": "Unauthorized",
-					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/users/:id/messages/:message_id",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users",
-								":id",
-								"messages",
-								":message_id"
-							],
-							"variable": [
-								{
-									"key": "id"
-								},
-								{
-									"key": "message_id"
-								}
-							]
-						}
-					},
-					"status": "Unauthorized",
-					"code": 401,
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": []
-				},
-				{
-					"id": "7bdb9e15-3948-4d8c-a159-056b57f48bfa",
-					"name": "Forbidden",
-					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/users/:id/messages/:message_id",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users",
-								":id",
-								"messages",
-								":message_id"
-							],
-							"variable": [
-								{
-									"key": "id"
-								},
-								{
-									"key": "message_id"
-								}
-							]
-						}
-					},
-					"status": "Forbidden",
-					"code": 403,
 					"_postman_previewlanguage": "Text",
 					"header": [],
 					"cookie": []
@@ -1790,7 +1336,7 @@
 					},
 					"status": "OK",
 					"code": 200,
-					"_postman_previewlanguage": "json",
+					"_postman_previewlanguage": "Text",
 					"header": [
 						{
 							"key": "Content-Type",
@@ -1798,7 +1344,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n\t\"users\": [\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t}\n\t]\n}"
+					"body": "{\n  \"users\": [\n    {\n      \"userId\": \"<string>\"\n    },\n    {\n      \"userId\": \"<string>\"\n    }\n  ],\n  \"messageId\": \"<string>\",\n  \"author\": \"<string>\",\n  \"receiver\": \"<string>\",\n  \"message\": \"<string>\",\n  \"time\": \"<dateTime>\"\n}"
 				},
 				{
 					"id": "ac64b7be-246f-40a3-be92-e48e51b64b57",
@@ -1829,72 +1375,6 @@
 					},
 					"status": "Bad Request",
 					"code": 400,
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": []
-				},
-				{
-					"id": "9a1ed060-9be8-4754-a640-96dd1e2e1cfb",
-					"name": "Unauthorized",
-					"originalRequest": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/users/:id/messages/:message_id",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users",
-								":id",
-								"messages",
-								":message_id"
-							],
-							"variable": [
-								{
-									"key": "id"
-								},
-								{
-									"key": "message_id"
-								}
-							]
-						}
-					},
-					"status": "Unauthorized",
-					"code": 401,
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": []
-				},
-				{
-					"id": "67604057-7aa8-41cc-b6ba-9ddea6530b61",
-					"name": "Forbidden",
-					"originalRequest": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/users/:id/messages/:message_id",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users",
-								":id",
-								"messages",
-								":message_id"
-							],
-							"variable": [
-								{
-									"key": "id"
-								},
-								{
-									"key": "message_id"
-								}
-							]
-						}
-					},
-					"status": "Forbidden",
-					"code": 403,
 					"_postman_previewlanguage": "Text",
 					"header": [],
 					"cookie": []
@@ -2001,7 +1481,7 @@
 					},
 					"status": "OK",
 					"code": 200,
-					"_postman_previewlanguage": "json",
+					"_postman_previewlanguage": "Text",
 					"header": [
 						{
 							"key": "Content-Type",
@@ -2009,7 +1489,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n\t\"users\": [\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t}\n\t]\n}"
+					"body": "{\n  \"users\": [\n    {\n      \"userId\": \"<string>\"\n    },\n    {\n      \"userId\": \"<string>\"\n    }\n  ],\n  \"messageId\": \"<string>\",\n  \"author\": \"<string>\",\n  \"receiver\": \"<string>\",\n  \"message\": \"<string>\",\n  \"time\": \"<dateTime>\"\n}"
 				},
 				{
 					"id": "1779884b-0bec-417b-9581-82e9cebc7aeb",
@@ -2040,72 +1520,6 @@
 					},
 					"status": "Bad Request",
 					"code": 400,
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": []
-				},
-				{
-					"id": "6138bb7f-0957-4b4f-b7be-6fc83cba98cb",
-					"name": "Unauthorized",
-					"originalRequest": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/users/:id/messages/:message_id",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users",
-								":id",
-								"messages",
-								":message_id"
-							],
-							"variable": [
-								{
-									"key": "id"
-								},
-								{
-									"key": "message_id"
-								}
-							]
-						}
-					},
-					"status": "Unauthorized",
-					"code": 401,
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": []
-				},
-				{
-					"id": "169c5519-962c-4b6f-b731-f8a79bbca282",
-					"name": "Forbidden",
-					"originalRequest": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/users/:id/messages/:message_id",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users",
-								":id",
-								"messages",
-								":message_id"
-							],
-							"variable": [
-								{
-									"key": "id"
-								},
-								{
-									"key": "message_id"
-								}
-							]
-						}
-					},
-					"status": "Forbidden",
-					"code": 403,
 					"_postman_previewlanguage": "Text",
 					"header": [],
 					"cookie": []
@@ -2205,7 +1619,7 @@
 					},
 					"status": "OK",
 					"code": 200,
-					"_postman_previewlanguage": "json",
+					"_postman_previewlanguage": "Text",
 					"header": [
 						{
 							"key": "Content-Type",
@@ -2213,7 +1627,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n\t\"users\": [\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t}\n\t]\n}"
+					"body": "{\n  \"users\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}"
 				},
 				{
 					"id": "6d1e2a68-1732-435f-920d-4a4c4cea8c5e",
@@ -2241,66 +1655,6 @@
 					},
 					"status": "Bad Request",
 					"code": 400,
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": []
-				},
-				{
-					"id": "a78d44e0-4212-41cf-a214-549e35eb9834",
-					"name": "Unauthorized",
-					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/users/:id/messages/friends",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users",
-								":id",
-								"messages",
-								"friends"
-							],
-							"variable": [
-								{
-									"key": "id"
-								}
-							]
-						}
-					},
-					"status": "Unauthorized",
-					"code": 401,
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": []
-				},
-				{
-					"id": "470e66a8-bec6-4984-a0a7-79e1af55413e",
-					"name": "Forbidden",
-					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/users/:id/messages/friends",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users",
-								":id",
-								"messages",
-								"friends"
-							],
-							"variable": [
-								{
-									"key": "id"
-								}
-							]
-						}
-					},
-					"status": "Forbidden",
-					"code": 403,
 					"_postman_previewlanguage": "Text",
 					"header": [],
 					"cookie": []
@@ -2338,7 +1692,7 @@
 			]
 		},
 		{
-			"name": "Buscar en todos los mensajes de nuestros amigos por contenido –contiene un determinado texto-. Poder limitar la cantidad de información obtenida por número.",
+			"name": "Buscar en todos los mensajes de nuestros amigos por contenido. Poder limitar la cantidad de información obtenida por número.",
 			"id": "15c5faf7-cc80-4762-a1bf-e7c3dbd1dbd8",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -2352,7 +1706,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{baseUrl}}/users/:id/messages/friends/search",
+					"raw": "{{baseUrl}}/users/:id/messages/friends/search?q=<string>",
 					"host": [
 						"{{baseUrl}}"
 					],
@@ -2362,6 +1716,13 @@
 						"messages",
 						"friends",
 						"search"
+					],
+					"query": [
+						{
+							"description": "Filtro de búsqueda por nombre",
+							"key": "q",
+							"value": "<string>"
+						}
 					],
 					"variable": [
 						{
@@ -2399,7 +1760,7 @@
 					},
 					"status": "OK",
 					"code": 200,
-					"_postman_previewlanguage": "json",
+					"_postman_previewlanguage": "Text",
 					"header": [
 						{
 							"key": "Content-Type",
@@ -2407,7 +1768,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n\t\"users\": [\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"userId\": \"<string>\"\n\t\t}\n\t]\n}"
+					"body": "{\n  \"users\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}"
 				},
 				{
 					"id": "4457a664-d37a-47aa-a3b4-5cab69fb5869",
@@ -2436,68 +1797,6 @@
 					},
 					"status": "Bad Request",
 					"code": 400,
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": []
-				},
-				{
-					"id": "ea2291ca-434d-4293-8113-0a76f36ba835",
-					"name": "Unauthorized",
-					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/users/:id/messages/friends/search",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users",
-								":id",
-								"messages",
-								"friends",
-								"search"
-							],
-							"variable": [
-								{
-									"key": "id"
-								}
-							]
-						}
-					},
-					"status": "Unauthorized",
-					"code": 401,
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": []
-				},
-				{
-					"id": "0c6e5a05-4a02-4bcb-b33c-5e4dd9844d0c",
-					"name": "Forbidden",
-					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/users/:id/messages/friends/search",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users",
-								":id",
-								"messages",
-								"friends",
-								"search"
-							],
-							"variable": [
-								{
-									"key": "id"
-								}
-							]
-						}
-					},
-					"status": "Forbidden",
-					"code": 403,
 					"_postman_previewlanguage": "Text",
 					"header": [],
 					"cookie": []
