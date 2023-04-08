@@ -44,7 +44,8 @@ paths:
               in: path
               required: true
               schema:
-                  $ref: "#/components/schemas/UserId"
+                    type: string 
+                    description: The unique identifier for the user.
         get:
             summary: Ver los datos básicos de un usuario
             responses:
@@ -100,7 +101,8 @@ paths:
               in: path
               required: true
               schema:
-                  $ref: "#/components/schemas/UserId"
+                    type: string 
+                    description: The unique identifier for the user.
         post:
             summary: Añadir un nuevo amigo de entre los usuarios registrados en la red social
             requestBody:
@@ -146,20 +148,23 @@ paths:
               in: path
               required: true
               schema:
-                  $ref: "#/components/schemas/UserId"
+                    type: string 
+                    description: The unique identifier for the user.
             - name: friend_id
               description: Identificador de usuario del amigo
               in: path
               required: true
               schema:
-                  $ref: "#/components/schemas/UserId"
+                    type: string 
+                    description: The unique identifier for the user.
         delete:
             summary: Eliminar un amigo
             requestBody:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/UserId"
+                            type: string 
+                            description: The unique identifier for the user.
             responses:
                 "200":
                     description: Amigo eliminado
@@ -174,7 +179,8 @@ paths:
               in: path
               required: true
               schema:
-                  $ref: "#/components/schemas/UserId"
+                    type: string 
+                    description: The unique identifier for the user.
         post:
             summary: Un usuario puede publicar un nuevo mensaje en su página personal
             responses:
@@ -206,7 +212,8 @@ paths:
               in: path
               required: true
               schema:
-                  $ref: "#/components/schemas/UserId"
+                    type: string 
+                    description: The unique identifier for the user.
             - name: message_id
               description: Identificador del mensaje
               in: path
@@ -266,7 +273,8 @@ paths:
               in: path
               required: true
               schema:
-                  $ref: "#/components/schemas/UserId"
+                    type: string 
+                    description: The unique identifier for the user.
         get:
             x-summary: Consultar últimos mensajes publicados de amigos
             summary: Consultar los últimos mensajes publicados de nuestros amigos en su página personal obtener una lista de los últimos mensajes de todos mis amigos, pudiendo filtrar estos mensajes por fecha (último antes de cierta fecha). Poder limitar la cantidad de información obtenida por número.
@@ -289,7 +297,8 @@ paths:
               in: path
               required: true
               schema:
-                  $ref: "#/components/schemas/UserId"
+                    type: string 
+                    description: The unique identifier for the user.
         get:
             x-summary: Buscar en mensajes de amigos
             summary: Buscar en todos los mensajes de nuestros amigos por contenido. Poder limitar la cantidad de información obtenida por número.
@@ -317,7 +326,7 @@ components:
             type: object
             properties:
                 userId:
-                    $ref: "#/components/schemas/UserId"
+                    type: string 
                     description: The unique identifier for the user.
                 name:
                     type: string
@@ -335,22 +344,14 @@ components:
                 - email
                 - age
 
-        UserId:
-            type: object
-            properties:
-                userId:
-                    type: string
-                    description: The unique identifier for the user.
-            required:
-                - userId
-
         UserList:
             type: object
             properties:
                 users:
                     type: array
                     items:
-                        $ref: "#/components/schemas/UserId"
+                          type: string 
+                    description: The unique identifier for the user.
             required:
                 - users
 
@@ -358,13 +359,14 @@ components:
             type: object
             properties:
                 messageId:
-                    $ref: "#/components/schemas/MessageId"
+                    type: string
                     description: The unique identifier for the post.
                 author:
-                    $ref: "#/components/schemas/UserId"
+                    type: string 
+
                     description: The user that posted the message.
                 receiver:
-                    $ref: "#/components/schemas/UserId"
+                    type: string
                     description: The user that received the message.
                 message:
                     type: string
@@ -396,6 +398,7 @@ components:
                 posts:
                     type: array
                     items:
-                        $ref: "#/components/schemas/MessageId"
+                        type: string 
+                    description: The unique identifier for the message.
             required:
                 - posts
