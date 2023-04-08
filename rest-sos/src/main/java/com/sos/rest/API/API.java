@@ -160,7 +160,7 @@ public class API {
         try {
             
             // get the user by id
-            User user = userService.getUserById(id);
+            //User user = userService.getUserById(id);
             
             // search the user's friend messages TODO: Implementar esto en MessageService
             // List<Message> friendMessages = user.searchFriendMessages(query, limit);
