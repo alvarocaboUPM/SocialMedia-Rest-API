@@ -2,7 +2,6 @@ package com.sos.rest;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.*;
-import javax.servlet.*;
 
 import com.sos.rest.API.API;
 
