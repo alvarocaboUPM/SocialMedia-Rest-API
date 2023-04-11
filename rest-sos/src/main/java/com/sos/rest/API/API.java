@@ -11,7 +11,7 @@ import com.sos.rest.services.*;
 
 @Path("/users")
 public class API {
-    // Service layer to handle user operations, injected through constructor
+
     private final UserService userService;
 
     public API(UserService userService) {
@@ -29,9 +29,15 @@ public class API {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllUsers(@QueryParam("q") String query) {
-        List<User> userList = userService.getUsers(query);
+        List<User> userList;
+        if (query == null) {
+            userList = userService.getAllUsers();
+        } else {
+            userList = userService.getUsers(query);
+        }
         return Response.status(Response.Status.OK).entity(userList).build();
     }
+    
 
     @Path("/{id}")
     @GET
