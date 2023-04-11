@@ -100,7 +100,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{baseUrl}}/users?q=<string>",
+					"raw": "{{baseUrl}}/users",
 					"host": [
 						"{{baseUrl}}"
 					],
@@ -109,9 +109,10 @@
 					],
 					"query": [
 						{
-							"description": "Filtro de búsqueda por nombre",
 							"key": "q",
-							"value": "<string>"
+							"value": " ",
+							"description": "Filtro de búsqueda por nombre",
+							"disabled": true
 						}
 					]
 				}
@@ -1835,11 +1836,33 @@
 			]
 		}
 	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "c365a2f0-1780-4ffa-8149-498954c25c68",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "43eb1c10-119e-4e00-be89-341fd70465fa",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
 	"variable": [
 		{
-			"id": "4183d361-2475-4966-96aa-ee9b9a53643a",
+			"id": "23017126-95b0-4f6f-b177-60f928112333",
 			"key": "baseUrl",
-			"value": "http://localhost:8000",
+			"value": "http://localhost:8080/rest-sos-api",
 			"type": "any"
 		}
 	]

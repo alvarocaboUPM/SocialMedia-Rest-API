@@ -363,7 +363,6 @@ components:
                     description: The unique identifier for the post.
                 author:
                     type: string 
-
                     description: The user that posted the message.
                 receiver:
                     type: string
