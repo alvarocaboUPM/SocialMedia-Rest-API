@@ -1,3 +1,5 @@
 *.class
 .vscode
 rest-sos/target
+*.jar
+*.war
