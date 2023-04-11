@@ -1,26 +1,29 @@
 package com.sos.rest.models;
 
-import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "messages")
+@XmlRootElement(name="messages")
 public class Message {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @XmlElement(name = "messageId")
     private Long messageId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id")
+
+    @XmlElement(name = "author")
     private User author;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "receiver_id")
+
+    @XmlElement(name = "receiver")
     private User receiver;
 
+    @XmlElement(name = "message")
     private String message;
 
+    @XmlElement(name = "time")
     private LocalDateTime time;
 
     public Message() {}
