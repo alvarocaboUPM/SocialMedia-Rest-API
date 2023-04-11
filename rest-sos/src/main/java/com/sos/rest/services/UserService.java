@@ -1,6 +1,9 @@
 package com.sos.rest.services;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
@@ -15,7 +18,12 @@ public class UserService {
     private EntityManagerFactory emf;
 
     public UserService() {
-        emf = Persistence.createEntityManagerFactory("user-persistance-unit");
+        Map<String, String> properties = new HashMap<>();
+        properties.put("javax.persistence.jdbc.url", "jdbc:mysql://localhost:3306/SOS");
+        properties.put("javax.persistence.jdbc.user", "root");
+        properties.put("javax.persistence.jdbc.password", "root");
+        properties.put("javax.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
+        emf = Persistence.createEntityManagerFactory("user-persistance-unit", properties);
     }
     
     public User addUser(User user) {

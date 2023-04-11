@@ -9,7 +9,7 @@ import javax.ws.rs.core.*;
 import com.sos.rest.models.*;
 import com.sos.rest.services.*;
 
-@Path("/users")
+@Path ("/api/v1")
 public class API {
 
     private final UserService userService;
@@ -18,6 +18,7 @@ public class API {
         this.userService = userService;
     }
 
+    @Path("/users")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -26,6 +27,7 @@ public class API {
         return Response.status(Response.Status.OK).entity(addedUser).build();
     }
 
+    @Path("/users")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllUsers(@QueryParam("q") String query) {
@@ -39,7 +41,7 @@ public class API {
     }
     
 
-    @Path("/{id}")
+    @Path("/users/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserById(@PathParam("id") long id) {
@@ -50,7 +52,7 @@ public class API {
         return Response.status(Response.Status.OK).entity(user).build();
     }
 
-    @Path("/{id}")
+    @Path("/users/{id}")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -62,7 +64,7 @@ public class API {
         return Response.status(Response.Status.OK).entity(user).build();
     }
 
-    @Path("/{id}")
+    @Path("/users/{id}")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteUser(@PathParam("id") long id) {
@@ -75,7 +77,7 @@ public class API {
 
     // POST /users/{id}/friends
     @POST
-    @Path("/{id}/friends")
+    @Path("/users/{id}/friends")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addFriend(@PathParam("id") String id, User friend) {
         // code to add friend
@@ -84,7 +86,7 @@ public class API {
 
     // GET /users/{id}/friends
     @GET
-    @Path("/{id}/friends")
+    @Path("/users/{id}/friends")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getFriends(
         @PathParam("id") String id,
@@ -99,7 +101,7 @@ public class API {
 
     // DELETE /users/{id}/friends/{friend_id}
     @DELETE
-    @Path("/{id}/friends/{friend_id}")
+    @Path("/users/{id}/friends/{friend_id}")
     public Response deleteFriend(
         @PathParam("id") String id,
         @PathParam("friend_id") String friendId
@@ -110,7 +112,7 @@ public class API {
 
     // POST /users/{id}/messages
     @POST
-    @Path("/{id}/messages")
+    @Path("/users/{id}/messages")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addMessage(
         @PathParam("id") String id,
@@ -122,7 +124,7 @@ public class API {
 
     // GET /users/{id}/messages
     @GET
-    @Path("/{id}/messages")
+    @Path("/users/{id}/messages")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMessages(
         @PathParam("id") String id,
@@ -137,7 +139,7 @@ public class API {
 
     // GET /users/{id}/messages/{message_id}
     @GET
-    @Path("/{id}/messages/{message_id}")
+    @Path("/users/{id}/messages/{message_id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMessage(
         @PathParam("id") String id,
@@ -154,7 +156,7 @@ public class API {
         // }
     }
 
-    @Path("/users/{id}/messages/friends/search")
+    @Path("/users/users/{id}/messages/friends/search")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response searchUserMessages(
