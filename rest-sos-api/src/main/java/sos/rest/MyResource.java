@@ -1,4 +1,4 @@
-package es.sos.rest;
+package sos.rest;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;

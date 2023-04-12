@@ -3,14 +3,14 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>rest-sos-v2</groupId>
-    <artifactId>rest-sos-v2</artifactId>
+    <groupId>sos</groupId>
+    <artifactId>rest-sos-api</artifactId>
     <packaging>war</packaging>
     <version>2.0</version>
-    <name>rest-sos-v2</name>
+    <name>rest-sos-api</name>
 
     <build>
-        <finalName>rest-sos-v2</finalName>
+        <finalName>rest-sos-api</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
