@@ -18,7 +18,7 @@ public class API {
     @Consumes(MediaType.TEXT_XML)
     @Produces(MediaType.TEXT_XML)
     public Response addUser(User user) {
-        return DB.createUser(user.getUserId(), user.getName(), user.getAge());
+        return DB.createUser(user.getUserId(), user.getName(), user.getEmail(), user.getAge());
     }
 
     @Path("/users")
@@ -80,14 +80,12 @@ public class API {
     @Path("/users/{id}/friends")
     @Produces(MediaType.TEXT_XML)
     public Response getFriends(
-        @PathParam("id") String id,
-        @QueryParam("q") String searchQuery,
-        @QueryParam("limit") int limit
+        @PathParam("id") Long id,
+        @QueryParam("q") String q,
+        @QueryParam("limit") int limit,
+        @QueryParam("offset") Integer offset
     ) {
-        // code to get friends
-        //TODO: Implementar esto en MessageService
-        List<User> friends = null;
-        return Response.ok(friends).build();
+        return DB.getFriends(id, q, limit, offset);
     }
 
     // DELETE /users/{id}/friends/{friend_id}

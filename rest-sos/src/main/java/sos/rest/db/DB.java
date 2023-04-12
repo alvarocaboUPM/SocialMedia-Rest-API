@@ -75,11 +75,13 @@ public class DB {
 			ResultSet rs = stmt.executeQuery();
 			result += "<Users>\n";
 			while (rs.next()) {
+				Long uId =rs.getLong("user_id");
 				String name = rs.getString("name");
 				String email = "" + rs.getString("email");
 				String age = "" + rs.getInt("age");
 
 				result += "<user>\n"
+						+ "<userId>" + uId + "</userId>\n"
 						+ "<name>" + name + "</name>\n"
 						+ "<email>" + email + "</email>\n"
 						+ "<age>" + age + "</age>\n"
@@ -176,7 +178,7 @@ public class DB {
 		return Response.status(Response.Status.OK).entity(number).build();
 	}
 
-	public static Response getFriends(Integer idUser, Integer limit, Integer offset) {
+	public static Response getFriends(Long idUser, String q, Integer limit, Integer offset ) {
 		PreparedStatement sentence = null;
 		PreparedStatement sentenceFriend = null;
 		String result = "<?xml version=\"1.0\"?>\n<Friends>\n";
@@ -196,7 +198,7 @@ public class DB {
 				+ "WHERE u.idUser = ?";
 		try {
 			sentence = connection.prepareStatement(query);
-			sentence.setInt(1, idUser);
+			sentence.setLong(1, idUser);
 			ResultSet rs = sentence.executeQuery();
 			while (rs.next()) {
 				Integer friend = rs.getInt("user2");
@@ -223,12 +225,21 @@ public class DB {
 		return Response.status(Response.Status.OK).entity(result).build();
 	}
 
-	public static Response createUser(Long idUser, String username, int age) {
+	/**
+	 * 
+	 * @param idUser
+	 * @param username
+	 * @param email
+	 * @param age
+	 * @return
+	 */
+	public static Response createUser(Long idUser, String username, String email, int age) {
 		Statement sentence = null;
 		String query = "INSERT INTO USERS\n"
-				+ "(idUser, username, name, lastname, gender, mail, phone)\n"
+				+ "(user_id, name, email, age)\n"
 				+ "VALUES\n"
 				+ "('" + idUser + "', '" + username
+				+ email + "', '"
 				+ age + "', '"
 				+ "');";
 		try {
