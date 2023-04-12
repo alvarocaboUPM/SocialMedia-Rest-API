@@ -76,12 +76,14 @@ public class DB {
 			result += "<Users>\n";
 			while (rs.next()) {
 				String name = rs.getString("name");
+				String email = "" + rs.getString("email");
 				String age = "" + rs.getInt("age");
 
-				result += "<User>\n"
-						+ "<Name>" + name + "</Name>\n"
-						+ "<Age>" + age + "</Age>\n"
-						+ "</User>\n";
+				result += "<user>\n"
+						+ "<name>" + name + "</name>\n"
+						+ "<email>" + email + "</email>\n"
+						+ "<age>" + age + "</age>\n"
+						+ "</user>\n";
 			}
 			stmt.close();
 			rs.close();
