@@ -41,6 +41,9 @@ sudo systemctl daemon-reload
 cd $home
 cp ./assets/tomcat-users.xml /opt/tomcat/conf && echo -e "\e[32mUsuarios habilitados\e[0m";
 
+sudo systemctl daemon-reload
+
+
 ufw allow 8080
 sudo systemctl enable tomcat
 
