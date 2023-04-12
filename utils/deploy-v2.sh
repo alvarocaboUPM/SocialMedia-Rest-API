@@ -2,8 +2,9 @@
 
 #        DEPLOY SCRIPT FOR TOMCAT APIs      #
 #              RUN USING SUDO               #
+#              by Álvaro Cabo               #
 
-cd ../rest-sos-v2
+cd ../rest-sos-client
 
 mvn clean package && echo -e "\e[36mBuild completed!\e[0m"
 cp ./target/rest-sos-api.war /opt/tomcat/webapps/ && echo -e "\e[36mWAR file copied\e[0m"
