@@ -1,4 +1,4 @@
-package com.sos.rest.API;
+package sos.rest;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
@@ -6,38 +6,29 @@ import java.util.List;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
-import com.sos.rest.models.*;
-import com.sos.rest.services.*;
+
+import sos.rest.db.DB;
+import sos.rest.models.*;
+import sos.rest.services.*;
 
 @Path ("/api/v1")
 public class API {
-
-    private final UserService userService;
-
-    public API(UserService userService) {
-        this.userService = userService;
-    }
 
     @Path("/users")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addUser(User user) {
-        User addedUser = userService.addUser(user);
-        return Response.status(Response.Status.OK).entity(addedUser).build();
+        // User addedUser = userService.addUser(user);
+        // return Response.status(Response.Status.OK).entity(addedUser).build();
+        return DB.getUsers();
     }
 
     @Path("/users")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllUsers(@QueryParam("q") String query) {
-        List<User> userList;
-        if (query == null) {
-            userList = userService.getAllUsers();
-        } else {
-            userList = userService.getUsers(query);
-        }
-        return Response.status(Response.Status.OK).entity(userList).build();
+        return DB.getUsers();
     }
     
 
@@ -45,11 +36,12 @@ public class API {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserById(@PathParam("id") long id) {
-        User user = userService.getUserById(id);
-        if (user == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-        return Response.status(Response.Status.OK).entity(user).build();
+        // User user = userService.getUserById(id);
+        // if (user == null) {
+        //     return Response.status(Response.Status.NOT_FOUND).build();
+        // }
+        // return Response.status(Response.Status.OK).entity(user).build();
+        return DB.getUsers();
     }
 
     @Path("/users/{id}")
@@ -57,22 +49,24 @@ public class API {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateUser(@PathParam("id") long id, User updatedUser) {
-        User user = userService.updateUser(id, updatedUser);
-        if (user == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-        return Response.status(Response.Status.OK).entity(user).build();
+        // User user = userService.updateUser(id, updatedUser);
+        // if (user == null) {
+        //     return Response.status(Response.Status.NOT_FOUND).build();
+        // }
+        // return Response.status(Response.Status.OK).entity(user).build();
+        return DB.getUsers();
     }
 
     @Path("/users/{id}")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteUser(@PathParam("id") long id) {
-        User user = userService.deleteUser(id);
-        if (user == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-        return Response.status(Response.Status.OK).entity(user).build();
+        // User user = userService.deleteUser(id);
+        // if (user == null) {
+        //     return Response.status(Response.Status.NOT_FOUND).build();
+        // }
+        // return Response.status(Response.Status.OK).entity(user).build();
+        return DB.getUsers();
     }
 
     // POST /users/{id}/friends

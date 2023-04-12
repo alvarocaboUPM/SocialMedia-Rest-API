@@ -1,4 +1,5 @@
-package com.sos.rest.services;
+package sos.rest.services;
+
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +12,7 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.NotFoundException;
 
-import com.sos.rest.models.User;
+import sos.rest.models.User;
 
 public class UserService {
 
@@ -112,4 +113,3 @@ public class UserService {
         }
     }
 }
-

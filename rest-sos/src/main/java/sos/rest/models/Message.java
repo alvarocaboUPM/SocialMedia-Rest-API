@@ -1,4 +1,4 @@
-package com.sos.rest.models;
+package sos.rest.models;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
