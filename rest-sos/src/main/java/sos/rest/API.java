@@ -9,70 +9,67 @@ import javax.ws.rs.core.*;
 
 import sos.rest.db.DB;
 import sos.rest.models.*;
-import sos.rest.services.*;
 
 @Path ("/api/v1")
 public class API {
 
     @Path("/users")
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
     public Response addUser(User user) {
-        // User addedUser = userService.addUser(user);
-        // return Response.status(Response.Status.OK).entity(addedUser).build();
-        return DB.getUsers();
+        return DB.createUser(user.getUserId(), user.getName(), user.getAge());
     }
 
     @Path("/users")
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_XML)
     public Response getAllUsers(@QueryParam("q") String query) {
-        return DB.getUsers();
+        return DB.getUsers(query);
     }
     
 
     @Path("/users/{id}")
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_XML)
     public Response getUserById(@PathParam("id") long id) {
         // User user = userService.getUserById(id);
         // if (user == null) {
         //     return Response.status(Response.Status.NOT_FOUND).build();
         // }
         // return Response.status(Response.Status.OK).entity(user).build();
-        return DB.getUsers();
+        return Response.ok("Hello Word").build();
     }
 
     @Path("/users/{id}")
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
     public Response updateUser(@PathParam("id") long id, User updatedUser) {
         // User user = userService.updateUser(id, updatedUser);
         // if (user == null) {
         //     return Response.status(Response.Status.NOT_FOUND).build();
         // }
         // return Response.status(Response.Status.OK).entity(user).build();
-        return DB.getUsers();
+        return Response.ok("Hello Word").build();
     }
 
     @Path("/users/{id}")
     @DELETE
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_XML)
     public Response deleteUser(@PathParam("id") long id) {
         // User user = userService.deleteUser(id);
         // if (user == null) {
         //     return Response.status(Response.Status.NOT_FOUND).build();
         // }
         // return Response.status(Response.Status.OK).entity(user).build();
-        return DB.getUsers();
+        return Response.ok("Hello Word").build();
     }
 
     // POST /users/{id}/friends
     @POST
     @Path("/users/{id}/friends")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.TEXT_XML)
     public Response addFriend(@PathParam("id") String id, User friend) {
         // code to add friend
         return Response.ok().build();
@@ -81,7 +78,7 @@ public class API {
     // GET /users/{id}/friends
     @GET
     @Path("/users/{id}/friends")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_XML)
     public Response getFriends(
         @PathParam("id") String id,
         @QueryParam("q") String searchQuery,
@@ -107,7 +104,7 @@ public class API {
     // POST /users/{id}/messages
     @POST
     @Path("/users/{id}/messages")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.TEXT_XML)
     public Response addMessage(
         @PathParam("id") String id,
         Message message
@@ -119,7 +116,7 @@ public class API {
     // GET /users/{id}/messages
     @GET
     @Path("/users/{id}/messages")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_XML)
     public Response getMessages(
         @PathParam("id") String id,
         @QueryParam("filter") String filter,
@@ -134,7 +131,7 @@ public class API {
     // GET /users/{id}/messages/{message_id}
     @GET
     @Path("/users/{id}/messages/{message_id}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_XML)
     public Response getMessage(
         @PathParam("id") String id,
         @PathParam("message_id") String messageId
@@ -152,7 +149,7 @@ public class API {
 
     @Path("/users/users/{id}/messages/friends/search")
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_XML)
     public Response searchUserMessages(
             @PathParam("id") Long id,
             @QueryParam("q") String query,
