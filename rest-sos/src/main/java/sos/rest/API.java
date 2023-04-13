@@ -1,8 +1,7 @@
 package sos.rest;
 
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.List;
+
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -39,7 +38,8 @@ public class API {
         //     return Response.status(Response.Status.NOT_FOUND).build();
         // }
         // return Response.status(Response.Status.OK).entity(user).build();
-        return Response.ok("Hello Word").build();
+        //return Response.ok("Hello Word").build();
+        return DB.getUserById(id);
     }
 
     @Path("/users/{id}")
@@ -83,10 +83,10 @@ public class API {
     public Response getFriends(
         @PathParam("id") Long id,
         @QueryParam("q") String q,
-        @QueryParam("limit") int limit,
+        @QueryParam("limit") Integer limit,
         @QueryParam("offset") Integer offset
     ) {
-        return DB.getFriends(id, q, limit, offset);
+        return DB.getUserFriends(id, q, limit);
     }
 
     // DELETE /users/{id}/friends/{friend_id}
@@ -134,9 +134,9 @@ public class API {
     @Produces(MediaType.TEXT_XML)
     public Response getMessage(
         @PathParam("id") Long id,
-        @PathParam("message_id") String messageId
+        @PathParam("message_id") Long messageId
     ) {
-        return null;
+        return DB.getSpecificPost(id, messageId);
 
         //TODO: Implementar esto en MessageService
         // Message message = messageService.getMessageByID(Long id, long message_id);
@@ -147,30 +147,20 @@ public class API {
         // }
     }
 
-    @Path("/users/users/{id}/messages/friends/search")
+    @Path("/users/{id}/messages/friends")
     @GET
     @Produces(MediaType.TEXT_XML)
     public Response searchUserMessages(
             @PathParam("id") Long id,
             @QueryParam("q") String query,
-            @QueryParam("limit") @DefaultValue("10") int limit // default limit is 10
+            @QueryParam("limit") Integer limit, // default limit is 10
+            @QueryParam("sdate") String startDate,
+            @QueryParam("edate") String endDate
         ) {
         
         try {
             
-            // get the user by id
-            //User user = userService.getUserById(id);
-            
-            // search the user's friend messages TODO: Implementar esto en MessageService
-            // List<Message> friendMessages = user.searchFriendMessages(query, limit);
-            
-            // create a list of user objects to return
-            List<User> friends = new ArrayList<>();
-            // for (Message message : friendMessages) {
-            //     friends.add(message.getAuthor());
-            // }
-            
-            return Response.ok(friends).build();
+            return DB.getFriendsPostsByDate(id, startDate, endDate, limit );
             
         } catch (InvalidParameterException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
@@ -179,5 +169,18 @@ public class API {
             return Response.status(Response.Status.FORBIDDEN).build();
         }
     }
+
+    @Path("/users/{id}/messages/friends/search")
+    @GET
+    @Produces(MediaType.TEXT_XML)
+    public Response searchUserMessagesWithContent(
+            @PathParam("id") Long id,
+            @QueryParam("q") String query,
+            @QueryParam("limit") Integer limit
+            
+        )
+        {
+            return DB.getFriendsPostsByContent(id, query, limit);
+        }
 
 }

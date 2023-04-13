@@ -19,16 +19,16 @@ public class TestDbConnection {
 
             // Open a connection
             System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SOS", "root", "root");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SOS", "pablo", "123");
 
             // Execute a query
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("SELECT * FROM User");
+            rs = stmt.executeQuery("SELECT * FROM users");
 
             // Process the results
             while (rs.next()) {
-                System.out.println(rs.getLong("id") + " " + rs.getString("name") + " " + rs.getString("email"));
+                System.out.println(rs.getLong("user_id") + " " + rs.getString("name") + " " + rs.getString("email"));
             }
         } catch (SQLException se) {
             // Handle errors for JDBC
