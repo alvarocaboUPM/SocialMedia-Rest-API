@@ -5,17 +5,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import java.time.LocalDateTime;
 
-@XmlRootElement(name="messages")
+@XmlRootElement(name="message")
 public class Message {
 
 
     @XmlElement(name = "messageId")
     private Long messageId;
 
-
     @XmlElement(name = "author")
     private User author;
-
 
     @XmlElement(name = "receiver")
     private User receiver;

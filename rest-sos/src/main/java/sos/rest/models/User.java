@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import java.util.Set;
 
-@XmlRootElement(name="users")
+@XmlRootElement(name="user")
 public class User {
 
 @XmlElement(name = "userId")
