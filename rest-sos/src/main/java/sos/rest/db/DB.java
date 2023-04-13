@@ -30,8 +30,8 @@ public class DB {
 				e.printStackTrace();
 			}
 			String host = "localhost:3306";
-			String user = "root";
-			String passwd = "root";
+			String user = "pablo@localhost";
+			String passwd = "123";
 			String database = "SOS";
 			String url = "jdbc:mysql://" + host + "/" + database; // URL para la conexión
 
