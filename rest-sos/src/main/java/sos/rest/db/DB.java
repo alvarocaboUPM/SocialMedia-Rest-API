@@ -75,7 +75,7 @@ public class DB {
 			ResultSet rs = stmt.executeQuery();
 			result += "<Users>\n";
 			while (rs.next()) {
-				Long uId =rs.getLong("user_id");
+				Long uId = rs.getLong("user_id");
 				String name = rs.getString("name");
 				String email = "" + rs.getString("email");
 				String age = "" + rs.getInt("age");
@@ -92,37 +92,40 @@ public class DB {
 			result += "</Users>";
 		} catch (SQLException e) {
 			e.printStackTrace();
-			result += new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n");
-			// st = Status.INTERNAL_SERVER_ERROR;
+			Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity(new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n")).build();
 		}
 		return Response.status(st).entity(result).build();
 	}
 
 	/**
-	 * @param idUser
+	 * @param user_id
 	 * @param limit
 	 * @param offset
 	 * @param sdate
 	 * @param edate
 	 * @return Response
 	 */
-	public Response getPosts(Integer idUser, Integer limit, Integer offset, String sdate, String edate) {
+	public static Response getPosts(Long user_id, String filter, Integer limit, Integer offset, String sdate, String edate) {
 		connectDB();
 		PreparedStatement sentence = null;
-		String result = "<?xml version=\"1.0\"?>\n<Posts>\n";
+		String result = "<?xml version=\"1.0\"?>\n<Messages>\n";
 		String query = "SELECT * \n"
-				+ "FROM POST p, USERS u \n"
-				+ "WHERE u.idUser = ? \n"
-				+ "AND p.user = u.idUser\n";
+				+ "FROM messages m, users u \n"
+				+ "WHERE u.user_id = ? \n"
+				+ "AND m.author_id = u.user_id\n";
 		if (sdate != null && edate != null) {
-			query += "AND p.creationDate BETWEEN '" + sdate + "' AND '" + edate + "' \n";
+			query += "AND m.time BETWEEN '" + sdate + "' AND '" + edate + "' \n";
 		} else {
 			if (sdate != null) {
-				query += "AND p.creationDate >= '" + sdate + "' \n";
+				query += "AND m.time >= '" + sdate + "' \n";
 			}
 			if (edate != null) {
-				query += "AND p.creationDate <= '" + edate + "' \n";
+				query += "AND m.time <= '" + edate + "' \n";
 			}
+		}
+		if (filter != null) {
+			query += "AND m.message LIKE '%" + filter + "%' \n";
 		}
 		if (limit != null) {
 			query += "LIMIT " + limit + " \n";
@@ -132,37 +135,40 @@ public class DB {
 		}
 		try {
 			sentence = connection.prepareStatement(query);
-			sentence.setInt(1, idUser);
+			sentence.setLong(1, user_id);
 			ResultSet rs = sentence.executeQuery();
 			while (rs.next()) {
-				String postBody = rs.getString("postBody");
-				Date date = rs.getDate("creationDate");
-				result += "<Post>" + postBody + "</Post>\n"
-						+ "<CreationDate>" + date + "</CreationDate>\n";
+				String postBody = rs.getString("message");
+				Date date = rs.getDate("time");
+				result += "<message>" + postBody + "</message>\n"
+						+ "<time>" + date + "</time>\n";
 			}
 			sentence.close();
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity(new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n")).build();
 		}
-		result += "</Posts>";
+
+		result += "</Messages>";
 		return Response.status(Response.Status.OK).entity(result).build();
 	}
 
-	public static Response getPostNumber(Integer idUser, String sdate, String edate) {
-		String number = "<?xml version=\"1.0\"?>\n<POSTS>\n";
+	public static Response getPostNumber(Long user_id, String sdate, String edate) {
+		String number = "<?xml version=\"1.0\"?>\n<Messages>\n";
 		Statement sentence = null;
 		String query = "SELECT COUNT(user) count\n"
 				+ "FROM POST p\n"
-				+ "WHERE p.user = " + idUser + "\n";
+				+ "WHERE p.user = " + user_id + "\n";
 		if (sdate != null && edate != null) {
-			query += "AND p.creationDate BETWEEN '" + sdate + "' AND '" + edate + "' \n";
+			query += "AND p.time BETWEEN '" + sdate + "' AND '" + edate + "' \n";
 		} else {
 			if (sdate != null) {
-				query += "AND p.creationDate >= '" + sdate + "' \n";
+				query += "AND p.time >= '" + sdate + "' \n";
 			}
 			if (edate != null) {
-				query += "AND p.creationDate <= '" + edate + "' \n";
+				query += "AND p.time <= '" + edate + "' \n";
 			}
 		}
 		try {
@@ -173,19 +179,21 @@ public class DB {
 			number += "<Number>" + count + "</Number>\n";
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity(new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n")).build();
 		}
-		number += "</POSTS>";
+		number += "</Messages>";
 		return Response.status(Response.Status.OK).entity(number).build();
 	}
 
-	public static Response getFriends(Long idUser, String q, Integer limit, Integer offset ) {
+	public static Response getFriends(Long user_id, String q, Integer limit, Integer offset) {
 		PreparedStatement sentence = null;
 		PreparedStatement sentenceFriend = null;
 		String result = "<?xml version=\"1.0\"?>\n<Friends>\n";
 		String query = "SELECT * \n"
 				+ "FROM ISFRIEND f, USERS u \n"
 				+ "WHERE f.user1 = ? \n"
-				+ "AND f.user1 = u.idUser \n";
+				+ "AND f.user1 = u.user_id \n";
 		if (limit != null) {
 			query += "LIMIT " + limit + " \n";
 			if (offset != null) {
@@ -195,10 +203,10 @@ public class DB {
 
 		String queryFriend = "SELECT * \n"
 				+ "FROM USERS u\n"
-				+ "WHERE u.idUser = ?";
+				+ "WHERE u.user_id = ?";
 		try {
 			sentence = connection.prepareStatement(query);
-			sentence.setLong(1, idUser);
+			sentence.setLong(1, user_id);
 			ResultSet rs = sentence.executeQuery();
 			while (rs.next()) {
 				Integer friend = rs.getInt("user2");
@@ -220,6 +228,8 @@ public class DB {
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity(new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n")).build();
 		}
 		result += "</Friends>";
 		return Response.status(Response.Status.OK).entity(result).build();
@@ -227,18 +237,18 @@ public class DB {
 
 	/**
 	 * 
-	 * @param idUser
+	 * @param user_id
 	 * @param username
 	 * @param email
 	 * @param age
 	 * @return
 	 */
-	public static Response createUser(Long idUser, String username, String email, int age) {
+	public static Response createUser(Long user_id, String username, String email, int age) {
 		Statement sentence = null;
 		String query = "INSERT INTO USERS\n"
 				+ "(user_id, name, email, age)\n"
 				+ "VALUES\n"
-				+ "('" + idUser + "', '" + username
+				+ "('" + user_id + "', '" + username
 				+ email + "', '"
 				+ age + "', '"
 				+ "');";
@@ -251,14 +261,16 @@ public class DB {
 			sentence.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity(new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n")).build();
 		}
 		return Response.status(Response.Status.CREATED).build();
 	}
 
-	public static Response postDeleteUser(Integer idUser) {
+	public static Response postDeleteUser(Long user_id) {
 		Statement sentence = null;
 		String query = "DELETE FROM USERS\n"
-				+ "WHERE idUser='" + idUser + "';";
+				+ "WHERE user_id='" + user_id + "';";
 		try {
 			sentence = connection.createStatement();
 			int rs = sentence.executeUpdate(query);
@@ -268,16 +280,18 @@ public class DB {
 			sentence.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity(new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n")).build();
 		}
 		return Response.status(Response.Status.BAD_REQUEST).build();
 	}
 
-	public static Response postAddPost(Integer idPost, String postBody, String creationDate, Integer user) {
+	public static Response postAddPost(Integer idPost, String postBody, String time, Integer user) {
 		Statement sentence = null;
 		String query = "INSERT INTO POST\n"
-				+ "(idPost, postBody, creationDate, user)\n"
+				+ "(idPost, postBody, time, user)\n"
 				+ "VALUES\n"
-				+ "('" + idPost + "', '" + postBody + "', '" + creationDate + "', '" + user + "');";
+				+ "('" + idPost + "', '" + postBody + "', '" + time + "', '" + user + "');";
 
 		try {
 			sentence = connection.createStatement();
@@ -288,6 +302,8 @@ public class DB {
 			sentence.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity(new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n")).build();
 		}
 		return Response.status(Response.Status.BAD_REQUEST).build();
 	}
@@ -305,18 +321,20 @@ public class DB {
 			sentence.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity(new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n")).build();
 		}
 		return Response.status(Response.Status.BAD_REQUEST).build();
 	}
 
-	public static Response postAddFriend(Integer idUser, Integer idUserFriend) {
+	public static Response postAddFriend(Long user_id, Integer user_idFriend) {
 		Statement sentence1 = null;
 		Statement sentence2 = null;
 		Boolean allIsGood = false;
 		String query1 = "INSERT INTO ISFRIEND\n"
 				+ "(user1, user2)\n"
 				+ "VALUES\n"
-				+ "('" + idUser + "', '" + idUserFriend + "');\n";
+				+ "('" + user_id + "', '" + user_idFriend + "');\n";
 		try {
 			sentence1 = connection.createStatement();
 			int rs = sentence1.executeUpdate(query1);
@@ -326,12 +344,13 @@ public class DB {
 			sentence1.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+
 		}
 
 		String query2 = "INSERT INTO ISFRIEND\n"
 				+ "(user1, user2)\n"
 				+ "VALUES\n"
-				+ "('" + idUserFriend + "', '" + idUser + "');\n";
+				+ "('" + user_idFriend + "', '" + user_id + "');\n";
 		try {
 			sentence2 = connection.createStatement();
 			int rs = sentence2.executeUpdate(query2);
@@ -341,14 +360,16 @@ public class DB {
 			sentence2.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity(new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n")).build();
 		}
 		return Response.status(Response.Status.BAD_REQUEST).build();
 	}
 
-	public static Boolean postModifyUsername(Integer idUser, String username) {
+	public static Boolean postModifyUsername(Long user_id, String username) {
 		String query = "UPDATE USERS u\n"
 				+ "SET u.username = '" + username + "'\n"
-				+ "WHERE u.idUser = " + idUser;
+				+ "WHERE u.user_id = " + user_id;
 		Statement sentence = null;
 		Boolean result = false;
 		try {
@@ -360,14 +381,16 @@ public class DB {
 			sentence.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity(new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n")).build();
 		}
 		return result;
 	}
 
-	public static Boolean postModifyName(Integer idUser, String name) {
+	public static Boolean postModifyName(Long user_id, String name) {
 		String query = "UPDATE USERS u\n"
 				+ "SET u.name = '" + name + "'\n"
-				+ "WHERE u.idUser = " + idUser;
+				+ "WHERE u.user_id = " + user_id;
 		Boolean result = false;
 		Statement sentence = null;
 		try {
@@ -379,14 +402,17 @@ public class DB {
 			sentence.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			e.printStackTrace();
+			Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity(new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n")).build();
 		}
 		return result;
 	}
 
-	public static Boolean postModifyLastname(Integer idUser, String lastname) {
+	public static Boolean postModifyLastname(Long user_id, String lastname) {
 		String query = "UPDATE USERS u\n"
 				+ "SET u.lastname = '" + lastname + "'\n"
-				+ "WHERE u.idUser = " + idUser;
+				+ "WHERE u.user_id = " + user_id;
 		Boolean result = false;
 		Statement sentence = null;
 		try {
@@ -398,14 +424,17 @@ public class DB {
 			sentence.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			e.printStackTrace();
+			Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity(new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n")).build();
 		}
 		return result;
 	}
 
-	public static Boolean postModifyGender(Integer idUser, String gender) {
+	public static Boolean postModifyGender(Long user_id, String gender) {
 		String query = "UPDATE USERS u\n"
 				+ "SET u.gender = '" + gender + "'\n"
-				+ "WHERE u.idUser = " + idUser;
+				+ "WHERE u.user_id = " + user_id;
 		Boolean result = false;
 		Statement sentence = null;
 		try {
@@ -417,14 +446,17 @@ public class DB {
 			sentence.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			e.printStackTrace();
+			Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity(new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n")).build();
 		}
 		return result;
 	}
 
-	public static Boolean postModifyMail(Integer idUser, String mail) {
+	public static Boolean postModifyMail(Long user_id, String mail) {
 		String query = "UPDATE USERS u\n"
 				+ "SET u.mail = '" + mail + "'\n"
-				+ "WHERE u.idUser = " + idUser;
+				+ "WHERE u.user_id = " + user_id;
 		Boolean result = false;
 		Statement sentence = null;
 		try {
@@ -436,14 +468,17 @@ public class DB {
 			sentence.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			e.printStackTrace();
+			Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity(new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n")).build();
 		}
 		return result;
 	}
 
-	public static Boolean postModifyPhone(Integer idUser, String phone) {
+	public static Boolean postModifyPhone(Long user_id, String phone) {
 		String query = "UPDATE USERS u\n"
 				+ "SET u.phone = '" + phone + "'\n"
-				+ "WHERE u.idUser = " + idUser;
+				+ "WHERE u.user_id = " + user_id;
 		Boolean result = false;
 		Statement sentence = null;
 		try {
@@ -455,6 +490,9 @@ public class DB {
 			sentence.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity(new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n")).build();
+
 		}
 		return result;
 	}
@@ -472,17 +510,20 @@ public class DB {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity(new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n")).build();
+
 		}
 		return Response.status(Response.Status.OK).build();
 	}
 
-	public static Response postDeleteFriend(Integer idUser, Integer idFriend) {
+	public static Response postDeleteFriend(Long user_id, Integer idFriend) {
 		String query1 = "DELETE FROM ISFRIEND \n"
-				+ "WHERE user1 = " + idUser + "\n"
+				+ "WHERE user1 = " + user_id + "\n"
 				+ "AND user2 = " + idFriend;
 		String query2 = "DELETE FROM ISFRIEND\n"
 				+ "WHERE user1 = " + idFriend + "\n"
-				+ "AND user2 = " + idUser;
+				+ "AND user2 = " + user_id;
 		Statement sentence1 = null;
 		Statement sentence2 = null;
 		try {
@@ -494,6 +535,9 @@ public class DB {
 			sentence1.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity(new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n")).build();
+
 		}
 		try {
 			sentence2 = connection.createStatement();
@@ -504,28 +548,31 @@ public class DB {
 			sentence2.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity(new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n")).build();
+
 		}
 		return Response.status(Response.Status.OK).build();
 	}
 
-	public static Response getFriendPosts(Integer idUser, String postBody,
+	public static Response getFriendPosts(Long user_id, String postBody,
 			Integer limit, Integer offset, String sdate, String edate) {
 		Statement sentenceFriend = null;
 		String queryFriend = "SELECT user2\n"
 				+ "FROM ISFRIEND f\n"
-				+ "WHERE f.user1 = " + idUser;
+				+ "WHERE f.user1 = " + user_id;
 		String queryPost = "SELECT *\n"
 				+ "FROM POST p, USERS u\n"
 				+ "WHERE p.user = ?\n"
-				+ "AND u.idUser = ?\n";
+				+ "AND u.user_id = ?\n";
 		if (sdate != null && edate != null) {
-			queryPost += "AND p.creationDate BETWEEN '" + sdate + "' AND '" + edate + "' \n";
+			queryPost += "AND p.time BETWEEN '" + sdate + "' AND '" + edate + "' \n";
 		} else {
 			if (sdate != null) {
-				queryPost += "AND p.creationDate >= '" + sdate + "' \n";
+				queryPost += "AND p.time >= '" + sdate + "' \n";
 			}
 			if (edate != null) {
-				queryPost += "AND p.creationDate <= '" + edate + "' \n";
+				queryPost += "AND p.time <= '" + edate + "' \n";
 			}
 		}
 		if (postBody != null) {
@@ -540,7 +587,7 @@ public class DB {
 		String subString = "";
 		int counter = 0;
 		PreparedStatement sentencePost = null;
-		String xmlResult = "<?xml version=\"1.0\"?>\n<Posts>\n";
+		String xmlResult = "<?xml version=\"1.0\"?>\n<Messages>\n";
 		try {
 			sentenceFriend = connection.createStatement();
 			ResultSet rsFriend = sentenceFriend.executeQuery(queryFriend);
@@ -571,8 +618,10 @@ public class DB {
 			rsFriend.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			xmlResult += new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n");
+			// st = Status.INTERNAL_SERVER_ERROR;
 		}
-		xmlResult += "</Posts>";
+		xmlResult += "</Messages>";
 		return Response.status(Response.Status.OK).entity(xmlResult).build();
 	}
 

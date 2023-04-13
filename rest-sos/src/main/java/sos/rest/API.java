@@ -15,7 +15,7 @@ public class API {
 
     @Path("/users")
     @POST
-    @Consumes(MediaType.TEXT_XML)
+    @Consumes(MediaType.APPLICATION_XML)
     @Produces(MediaType.TEXT_XML)
     public Response addUser(User user) {
         return DB.createUser(user.getUserId(), user.getName(), user.getEmail(), user.getAge());
@@ -24,7 +24,8 @@ public class API {
     @Path("/users")
     @GET
     @Produces(MediaType.TEXT_XML)
-    public Response getAllUsers(@QueryParam("q") String query) {
+    public Response getAllUsers(
+        @QueryParam("q") String query) {
         return DB.getUsers(query);
     }
     
@@ -70,7 +71,7 @@ public class API {
     @POST
     @Path("/users/{id}/friends")
     @Consumes(MediaType.TEXT_XML)
-    public Response addFriend(@PathParam("id") String id, User friend) {
+    public Response addFriend(@PathParam("id") Long id, User friend) {
         // code to add friend
         return Response.ok().build();
     }
@@ -92,7 +93,7 @@ public class API {
     @DELETE
     @Path("/users/{id}/friends/{friend_id}")
     public Response deleteFriend(
-        @PathParam("id") String id,
+        @PathParam("id") Long id,
         @PathParam("friend_id") String friendId
     ) {
         // code to delete friend
@@ -104,7 +105,7 @@ public class API {
     @Path("/users/{id}/messages")
     @Consumes(MediaType.TEXT_XML)
     public Response addMessage(
-        @PathParam("id") String id,
+        @PathParam("id") Long id,
         Message message
     ) {
         // code to add message
@@ -116,14 +117,15 @@ public class API {
     @Path("/users/{id}/messages")
     @Produces(MediaType.TEXT_XML)
     public Response getMessages(
-        @PathParam("id") String id,
+        @PathParam("id") Long id,
         @QueryParam("filter") String filter,
-        @QueryParam("limit") int limit
+        @QueryParam("limit") Integer limit,
+        @QueryParam("offset") Integer offset,
+        @QueryParam("sdate") String startDate,
+        @QueryParam("edate") String endDate
     ) {
-        // code to get messages
-        //TODO: Implementar esto en MessageService
-        List<Message> messages = null;
-        return Response.ok(messages).build();
+        //return Response.ok("Hello").build();
+        return DB.getPosts(id, filter, limit, offset, startDate, endDate);
     }
 
     // GET /users/{id}/messages/{message_id}
@@ -131,7 +133,7 @@ public class API {
     @Path("/users/{id}/messages/{message_id}")
     @Produces(MediaType.TEXT_XML)
     public Response getMessage(
-        @PathParam("id") String id,
+        @PathParam("id") Long id,
         @PathParam("message_id") String messageId
     ) {
         return null;
