@@ -14,12 +14,19 @@ public class API {
 
     @Path("/users")
     @POST
-    @Consumes(MediaType.APPLICATION_XML)
+    @Consumes(MediaType.TEXT_XML)
     @Produces(MediaType.TEXT_XML)
     public Response addUser(User user) {
-        return DB.createUser(user.getUserId(), user.getName(), user.getEmail(), user.getAge());
+        // Agregar usuario a la base de datos
+        int result = DB.addUserToDB(user);
+        if (result == 1) {
+            // Si se agregó correctamente, devolver código 201 Created
+            return Response.status(Response.Status.CREATED).build();
+        } else {
+            // Si falló la inserción, devolver código 400 Bad Request
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
     }
-
     @Path("/users")
     @GET
     @Produces(MediaType.TEXT_XML)

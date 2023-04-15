@@ -405,6 +405,43 @@ public static Response getFriendsPostsByContent(Long userId, String searchTerm, 
 	
 		return Response.status(st).entity(result).build();
 	}
+
+	public static int addUserToDB(User user) {
+		connectDB();
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try {
+            
+
+            // Preparar una sentencia SQL para insertar un nuevo usuario
+            String query = "INSERT INTO users (user_id, name, email, age) VALUES (?, ?, ?, ?)";
+            stmt = conn.prepareStatement(query);
+            stmt.setLong(1, user.getUserId());
+            stmt.setString(2, user.getName());
+            stmt.setString(3, user.getEmail());
+            stmt.setInt(4, user.getAge());
+
+            // Ejecutar la sentencia SQL para insertar un nuevo usuario
+            return stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Si se produce un error, devolver -1 para indicar que la inserción falló
+            return -1;
+        } finally {
+            try {
+                // Cerrar la conexión y la sentencia SQL
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 	/**
 	 * 
 	 * @param user_id
