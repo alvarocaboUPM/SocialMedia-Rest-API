@@ -14,5 +14,7 @@ public class XmlToUserConverter {
         User user = (User) unmarshaller.unmarshal(reader);
         return user;
     }
+
+
 }
 

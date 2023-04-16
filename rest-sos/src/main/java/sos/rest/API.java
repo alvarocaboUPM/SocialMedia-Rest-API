@@ -115,13 +115,14 @@ public class API {
     // POST /users/{id}/messages
     @POST
     @Path("/users/{id}/messages")
-    @Consumes(MediaType.TEXT_XML)
+    @Consumes(MediaType.APPLICATION_XML)
     public Response addMessage(
             @PathParam("id") Long id,
-            Message message
-    ) {
+            String query
+    ) throws JAXBException {
+        Message msg = XmlToMessage.fromXml(query);
         // code to add message
-        return Response.ok().build();
+        return DB.insertMessage(id, msg);
     }
 
     // GET /users/{id}/messages
@@ -211,4 +212,26 @@ public class API {
         return DB.getFriendsPostsByContent(id, query, limit);
     }
 
+    @Path("/users/{id}")
+    @PUT
+    @Consumes(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_XML)
+    public Response updateUser(@PathParam("id") Long id, String query) throws JAXBException {
+        User user = XmlToUserConverter.fromXml(query);
+        // User user = userService.updateUser(id, updatedUser);
+        // if (user == null) {
+        //     return Response.status(Response.Status.NOT_FOUND).build();
+        // }
+        // return Response.status(Response.Status.OK).entity(user).build();
+        return DB.updateUser(id, user);
+    }
+
+    @Path("/users/{id}/messages/{message_id}")
+    @PUT
+    @Consumes(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_XML)
+    public Response updateMessage(@PathParam("id") Long id, @PathParam("id") Long id_msg, String query) throws JAXBException {
+        Message msj = XmlToMessage.fromXml(query);
+        return DB.updateMessage(id, id_msg, msj);
+    }
 }

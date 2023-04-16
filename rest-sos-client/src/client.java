@@ -11,7 +11,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.client.WebTarget;
-
+import org.junit.Test;
 import org.glassfish.jersey.client.ClientConfig;
 //import javax.ws.rs.client.config.DefaultClientConfig;
 //import javax.ws.rs.representation.Form;
@@ -266,21 +266,67 @@ public class client {
          *                 .build();
          *     }
          */
-        Response resRmvMsg =
-                JAXBFriendModel deleteFriend = new JAXBFriendModel();
-        deleteFriend.setIdFriend(7);
-        Response response8 = target.path("users")
-                .path("2").path("friends")
-                .path("delete").request()
-                .post(Entity.entity(deleteFriend, MediaType.TEXT_XML));
-        System.out.println(response8);
+        Response resRmvMsg =target.path("users").path("1").path("messages").path("1").request().delete();
+        System.out.println(resRmvMsg.getStatus());
+
+        //----------------------------------------------------------------------
+        // Consultar los últimos mensajes publicados de nuestros amigos
+        // en su página personal obtener una lista de los últimos mensajes de todos mis amigos,
+        // pudiendo filtrar estos mensajepor fecha (último antes de cierta fecha).
+        // Poder limitar la cantidad de inform
+        //----------------------------------------------------------------------
+
+        /**
+         * @Path("/users/{id}/messages/friends")
+         *     @GET
+         *     @Produces(MediaType.TEXT_XML)
+         *     public Response searchUserMessages(
+         *             @PathParam("id") Long id,
+         *             @QueryParam("q") String query,
+         *             @QueryParam("limit") Integer limit, // default limit is 10
+         *             @QueryParam("sdate") String startDate,
+         *             @QueryParam("edate") String endDate
+         *     ) {
+         *
+         *         try {
+         *
+         *             return DB.getFriendsPostsByDate(id, startDate, endDate, limit );
+         *
+         *         } catch (InvalidParameterException e) {
+         *             return Response.status(Response.Status.BAD_REQUEST).build();
+         *
+         *         } catch (ForbiddenException e) {
+         *             return Response.status(Response.Status.FORBIDDEN).build();
+         *         }
+         *     }
+         */
+         Response resFrendMsgs = target.path("users").path("1").path("messages").path("friends").request().get();
+         System.out.println(resFrendMsgs);
 
 
+//Buscar en todos los mensajes de nuestros amigos por contenido. Poder limitar la cantidad de información obtenida por número.
 
 
+        //----------------------------------------------------------------------
+        //  Un usuario puede eliminar un mensaje de su página personal
+        //----------------------------------------------------------------------
+        /**
+         *     @Path("/users/{id}/messages/friends/search")
+         *     @GET
+         *     @Produces(MediaType.TEXT_XML)
+         *     public Response searchUserMessagesWithContent(
+         *             @PathParam("id") Long id,
+         *             @QueryParam("q") String query,
+         *             @QueryParam("limit") Integer limit
+         *
+         *     )
+         *     {
+         *         return DB.getFriendsPostsByContent(id, query, limit);
+         *     }
+         */
 
-
-
+        Response resFilterMsg = target.path("users").path("1").path("messages").path("friends").queryParam("good").request().get();
+        System.out.println(resFilterMsg);
     }
 
 

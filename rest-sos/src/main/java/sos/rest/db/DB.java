@@ -569,6 +569,98 @@ public class DB {
 		return Response.status(Response.Status.CREATED).build();
 	}
 
+	public static Response insertMessage(Long userId, Message message) {
+		connectDB();
+		PreparedStatement sentence = null;
+		String query = "INSERT INTO messages (author_id, receiver_id, message, time) VALUES (?, ?, ?, ?)";
+		try {
+			sentence = connection.prepareStatement(query);
+			sentence.setLong(1, message.getAuthor().getUserId());
+			sentence.setLong(2, message.getReceiver().getUserId());
+			sentence.setString(3, message.getMessage());
+			sentence.setObject(4, message.getTime());
+			int rowsInserted = sentence.executeUpdate();
+			if (rowsInserted > 0) {
+				return Response.status(Response.Status.CREATED).build();
+			} else {
+				return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+						.entity(new String("<SQL ERROR>\n\t" + "Could not insert message" + "\n</SQL ERROR>\n")).build();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity(new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n")).build();
+		} finally {
+			try {
+				if (sentence != null) {
+					sentence.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public static Response updateUser(Long id, User updatedUser) {
+
+
+		connectDB();
+		String sql = "UPDATE users SET name = '?', email = '?, age = '?' WHERE user_id = '?'";
+		PreparedStatement stmt;
+		Status st = Status.OK;
+		String result = "<?xml version=\"1.0\"?>\n";
+		try {
+			stmt = connection.prepareStatement(sql);
+			stmt.setString(1, updatedUser.getName());
+			stmt.setString(2, updatedUser.getEmail());
+			stmt.setInt(3, updatedUser.getAge());
+			stmt.setLong(4, id);
+			int rowsAffected = stmt.executeUpdate();
+			if (rowsAffected == 0) {
+				st = Response.Status.NOT_FOUND;
+				result += "<message>User with id " + id + " not found</message>";
+			} else {
+				result += "<message>Updated user with id " + id + "</message>";
+			}
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			st = Response.Status.INTERNAL_SERVER_ERROR;
+			result = "<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n";
+		}
+		return Response.status(st).entity(result).build();
+	}
+
+	public static Response updateMessage(Long userId, Long messageId, Message newMessage) {
+		connectDB();
+		PreparedStatement sentence = null;
+		String query = "UPDATE messages SET message = ?, time = ? WHERE message_id = ? AND author_id = ?";
+		try {
+			sentence = connection.prepareStatement(query);
+			sentence.setString(1, newMessage.getMessage());
+			sentence.setObject(2, newMessage.getTime());
+			sentence.setLong(3, messageId);
+			sentence.setLong(4, userId);
+			int rowsUpdated = sentence.executeUpdate();
+			if (rowsUpdated > 0) {
+				return Response.status(Response.Status.OK).build();
+			} else {
+				return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+						.entity(new String("<SQL ERROR>\n\t" + "Could not update message" + "\n</SQL ERROR>\n")).build();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity(new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n")).build();
+		} finally {
+			try {
+				if (sentence != null) {
+					sentence.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	public static Response postDeleteUser(Long user_id) {
 		Statement sentence = null;
 		String query = "DELETE FROM USERS\n"
