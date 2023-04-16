@@ -58,8 +58,7 @@ paths:
                                 $ref: "#/components/schemas/User"
                 "404":
                     description: User not found
-                "400":
-                    description: Invalid ID type supplied
+
                 
         put:
             summary: Cambiar datos básicos de nuestro perfil de usuario
@@ -77,8 +76,7 @@ paths:
                                 $ref: "#/components/schemas/User"
                 "404":
                     description: User not found
-                "400":
-                    description: Invalid ID type supplied
+
                 
         delete:
             summary: Borrar nuestro perfil de la red social
@@ -91,8 +89,7 @@ paths:
                                 $ref: "#/components/schemas/User"
                 "404":
                     description: User not found
-                "400":
-                    description: Invalid ID type supplied
+
                 
 
     /users/{id}/friends:
@@ -117,8 +114,7 @@ paths:
                     description: Amigo añadido
                 "404":
                     description: User not found
-                "400":
-                    description: Invalid ID type supplied
+
                 
         get:
             x-summary: Obtener una lista de todos nuestros amigos, permite la opción de ser filtrada por el patrón de nombre o limitar la cantidad de información obtenida por número de amigos
@@ -207,8 +203,7 @@ paths:
                                 $ref: "#/components/schemas/PostList"
                 "404":
                     description: User not found
-                "400":
-                    description: Invalid ID type supplied
+
                 
     /users/{id}/messages/{message_id}:
         parameters:
@@ -238,8 +233,7 @@ paths:
                                 $ref: "#/components/schemas/Message"
                 "404":
                     description: User not found
-                "400":
-                    description: Invalid ID type supplied
+
                 
         put:
             x-summary: Editar mensaje
@@ -253,8 +247,7 @@ paths:
                                 $ref: "#/components/schemas/Message"
                 "404":
                     description: User not found
-                "400":
-                    description: Invalid ID type supplied
+
                 
         delete:
             x-summary: Eliminar mensaje
@@ -268,8 +261,7 @@ paths:
                                 $ref: "#/components/schemas/Message"
                 "404":
                     description: User not found
-                "400":
-                    description: Invalid ID type supplied
+
                 
 
     /users/{id}/messages/friends:
@@ -294,8 +286,7 @@ paths:
                                 $ref: "#/components/schemas/UserList"
                 "404":
                     description: User not found
-                "400":
-                    description: Invalid ID type supplied
+
                 
     /users/{id}/messages/friends/search:
         parameters:
@@ -325,8 +316,7 @@ paths:
                                 $ref: "#/components/schemas/UserList"
                 "404":
                     description: User not found
-                "400":
-                    description: Invalid ID type supplied
+
                 
 components:
     schemas:

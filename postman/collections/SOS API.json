@@ -27,7 +27,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "<user>\n  <name>Test</name>\n  <email>test12@example.com</email>\n  <age>25</age>\n</user>"
+					"raw": "<user>\n  <name>Test</name>\n  <email>test123@example.com</email>\n  <age>25</age>\n</user>"
 				},
 				"url": {
 					"raw": "{{baseUrl}}/users",
@@ -41,59 +41,7 @@
 			},
 			"response": [
 				{
-					"id": "570e3911-d6b8-4e70-82f4-7079e68b3f53",
-					"name": "Añadir un usuario nuevo a la red",
-					"originalRequest": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/xml"
-							},
-							{
-								"key": "Accept",
-								"value": "application/xml"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "<user>\n  <name>Test</name>\n  <email>new1@example.com</email>\n  <age>25</age>\n</user>"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/users",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users"
-							]
-						}
-					},
-					"status": "Created",
-					"code": 201,
-					"_postman_previewlanguage": "plain",
-					"header": [
-						{
-							"key": "Content-Length",
-							"value": "0"
-						},
-						{
-							"key": "Date",
-							"value": "Sun, 16 Apr 2023 21:43:11 GMT"
-						},
-						{
-							"key": "Keep-Alive",
-							"value": "timeout=20"
-						},
-						{
-							"key": "Connection",
-							"value": "keep-alive"
-						}
-					],
-					"cookie": []
-				},
-				{
-					"id": "8f8a8084-9458-4da4-8fbb-6a427bc60fd0",
+					"id": "2bf3f00b-e453-4b09-9a2f-bdae54c8a628",
 					"name": "Usuario repetido",
 					"originalRequest": {
 						"method": "POST",
@@ -135,7 +83,7 @@
 						},
 						{
 							"key": "Date",
-							"value": "Sun, 16 Apr 2023 21:46:04 GMT"
+							"value": "Sun, 16 Apr 2023 21:48:56 GMT"
 						},
 						{
 							"key": "Connection",
@@ -144,6 +92,58 @@
 					],
 					"cookie": [],
 					"body": "<SQL ERROR>\n\tDuplicate entry 'test12@example.com' for key 'users.email'\n</SQL ERROR>"
+				},
+				{
+					"id": "e9ec6736-2097-42cd-a9fc-3534623d9d5e",
+					"name": "Añadir un usuario nuevo a la red",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/xml"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<user>\n  <name>Test</name>\n  <email>test123@example.com</email>\n  <age>25</age>\n</user>"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "0"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 16 Apr 2023 21:49:15 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=20"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": []
 				}
 			]
 		},
@@ -162,7 +162,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{baseUrl}}/users?q= ",
+					"raw": "{{baseUrl}}/users?q=John",
 					"host": [
 						"{{baseUrl}}"
 					],
@@ -171,9 +171,9 @@
 					],
 					"query": [
 						{
-							"description": "Filtro de búsqueda por nombre",
 							"key": "q",
-							"value": " "
+							"value": "John",
+							"description": "Filtro de búsqueda por nombre"
 						}
 					]
 				}
@@ -208,12 +208,125 @@
 					"header": [
 						{
 							"key": "Content-Type",
-							"value": "application/json",
+							"value": "application/xml",
 							"enabled": true
 						}
 					],
 					"cookie": [],
 					"body": "{\n  \"users\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}"
+				},
+				{
+					"id": "4bf2c894-dc7e-47a1-97e3-6a72c2ccb669",
+					"name": "Todos los usuarios",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/xml"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": " ",
+									"description": "Filtro de búsqueda por nombre",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "xml",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/xml"
+						},
+						{
+							"key": "Content-Length",
+							"value": "754"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 16 Apr 2023 21:50:08 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=20"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "<?xml version=\"1.0\"?>\n<Users>\n    <user>\n        <userId>1</userId>\n        <name>John Doe</name>\n        <email>john@example.com</email>\n        <age>28</age>\n    </user>\n    <user>\n        <userId>2</userId>\n        <name>Jane Doe</name>\n        <email>jane@example.com</email>\n        <age>25</age>\n    </user>\n    <user>\n        <userId>3</userId>\n        <name>Bob Smith</name>\n        <email>bob@example.com</email>\n        <age>32</age>\n    </user>\n    <user>\n        <userId>4</userId>\n        <name>Alice Johnson</name>\n        <email>alice@example.com</email>\n        <age>30</age>\n    </user>\n    <user>\n        <userId>10</userId>\n        <name>Test</name>\n        <email>test@example.com</email>\n        <age>25</age>\n    </user>\n    <user>\n        <userId>12</userId>\n        <name>Test</name>\n        <email>test12@example.com</email>\n        <age>25</age>\n    </user>\n    <user>\n        <userId>17</userId>\n        <name>Test</name>\n        <email>test123@example.com</email>\n        <age>25</age>\n    </user>\n</Users>"
+				},
+				{
+					"id": "2eea625d-efc6-4bbc-b642-7e073423716b",
+					"name": "Filtrado",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/xml"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users?q=John",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "John",
+									"description": "Filtro de búsqueda por nombre"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "xml",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/xml"
+						},
+						{
+							"key": "Content-Length",
+							"value": "248"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 16 Apr 2023 21:50:27 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=20"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "<?xml version=\"1.0\"?>\n<Users>\n    <user>\n        <userId>1</userId>\n        <name>John Doe</name>\n        <email>john@example.com</email>\n        <age>28</age>\n    </user>\n    <user>\n        <userId>4</userId>\n        <name>Alice Johnson</name>\n        <email>alice@example.com</email>\n        <age>30</age>\n    </user>\n</Users>"
 				}
 			]
 		},
@@ -243,7 +356,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "userId,<string>"
+							"value": "2896"
 						}
 					]
 				}
@@ -276,6 +389,68 @@
 					"_postman_previewlanguage": "Text",
 					"header": [],
 					"cookie": []
+				},
+				{
+					"id": "a020e6c6-1acd-494b-9560-74d818cef704",
+					"name": "Datos del usuario",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "Text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/xml"
+						}
+					],
+					"cookie": [],
+					"body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n\t<userId>(integer)</userId>\n\t<name>(string)</name>\n\t<email>(string)</email>\n\t<age>(integer)</age>\n</element>"
+				},
+				{
+					"id": "9cc88c88-9363-4cde-8809-0fc9bb549176",
+					"name": "User not found",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": []
 				}
 			]
 		},
@@ -290,7 +465,7 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json"
+						"value": "application/xml"
 					},
 					{
 						"key": "Accept",
@@ -358,7 +533,7 @@
 					"header": [
 						{
 							"key": "Content-Type",
-							"value": "application/json",
+							"value": "application/xml",
 							"enabled": true
 						}
 					],
@@ -503,7 +678,7 @@
 					"header": [
 						{
 							"key": "Content-Type",
-							"value": "application/json",
+							"value": "application/xml",
 							"enabled": true
 						}
 					],
@@ -579,7 +754,7 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json"
+						"value": "application/xml"
 					}
 				],
 				"url": {
@@ -811,7 +986,7 @@
 					"header": [
 						{
 							"key": "Content-Type",
-							"value": "application/json",
+							"value": "application/xml",
 							"enabled": true
 						}
 					],
@@ -831,7 +1006,7 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json"
+						"value": "application/xml"
 					},
 					{
 						"key": "Accept",
@@ -910,7 +1085,7 @@
 					"header": [
 						{
 							"key": "Content-Type",
-							"value": "application/json",
+							"value": "application/xml",
 							"enabled": true
 						}
 					],
@@ -981,7 +1156,7 @@
 					"header": [
 						{
 							"key": "Content-Type",
-							"value": "application/json",
+							"value": "application/xml",
 							"enabled": true
 						}
 					],
@@ -1052,7 +1227,7 @@
 					"header": [
 						{
 							"key": "Content-Type",
-							"value": "application/json",
+							"value": "application/xml",
 							"enabled": true
 						}
 					],
@@ -1190,7 +1365,7 @@
 					"header": [
 						{
 							"key": "Content-Type",
-							"value": "application/json",
+							"value": "application/xml",
 							"enabled": true
 						}
 					],
@@ -1336,7 +1511,7 @@
 					"header": [
 						{
 							"key": "Content-Type",
-							"value": "application/json",
+							"value": "application/xml",
 							"enabled": true
 						}
 					],
@@ -1482,7 +1657,7 @@
 					"header": [
 						{
 							"key": "Content-Type",
-							"value": "application/json",
+							"value": "application/xml",
 							"enabled": true
 						}
 					],
@@ -1621,7 +1796,7 @@
 					"header": [
 						{
 							"key": "Content-Type",
-							"value": "application/json",
+							"value": "application/xml",
 							"enabled": true
 						}
 					],
@@ -1705,7 +1880,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{baseUrl}}/users/:id/messages/friends/search?q=<string>",
+					"raw": "{{baseUrl}}/users/:id/messages/friends/search",
 					"host": [
 						"{{baseUrl}}"
 					],
@@ -1720,13 +1895,14 @@
 						{
 							"description": "Filtro de búsqueda por nombre",
 							"key": "q",
-							"value": "<string>"
+							"value": "<string>",
+							"disabled": true
 						}
 					],
 					"variable": [
 						{
 							"key": "id",
-							"value": "userId,<string>"
+							"value": ""
 						}
 					]
 				}
@@ -1763,7 +1939,7 @@
 					"header": [
 						{
 							"key": "Content-Type",
-							"value": "application/json",
+							"value": "application/xml",
 							"enabled": true
 						}
 					],
