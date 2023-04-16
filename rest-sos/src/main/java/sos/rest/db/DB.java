@@ -427,6 +427,21 @@ public class DB {
 		result += "</Friends>";
 		return Response.status(Response.Status.OK).entity(result).build();
 	}*/
+	//userId se hace amigo de friend
+	public static void insertFriend(Long userId, User friend) {
+		connectDB();
+		String sql = "INSERT INTO friends (user_id, friend_id) VALUES (?, ?)";
+		PreparedStatement stmt;
+		try {
+			stmt = connection.prepareStatement(sql);
+			stmt.setLong(1, userId);
+			stmt.setLong(2, friend.getUserId());
+			stmt.executeUpdate();
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	public static Response getUserFriends(Long userId, String namePattern, Integer limit) {
 		connectDB();
 		String sql = "SELECT u.* FROM users u JOIN friends f ON u.user_id = f.friend_id WHERE f.user_id = ?";
@@ -468,7 +483,6 @@ public class DB {
 							+ "<email>" + email + "</email>\n"
 							+ "<age>" + age + "</age>\n"
 							+ "</friend>\n";
-				} while (rs.next());
 				} while (rs.next());
 				result += "</userFriends>\n";
 			}

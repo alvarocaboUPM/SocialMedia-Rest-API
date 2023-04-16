@@ -68,12 +68,218 @@ public class client {
          */
 
         Response resGetUsers = target.path("users").request().accept(MediaType.TEXT_XML).get();
-        System.out.println(rUsers.readEntity(String.class));
+        System.out.println(resGetUsers.readEntity(String.class));
 
         //----------------------------------------------------------------------
         // Ver los datos básicos de un usuario
         //----------------------------------------------------------------------
-        Re
+        /**
+         *  @Path("/users/{id}")
+         *     @GET
+         *     @Produces(MediaType.TEXT_XML)
+         *     public Response getUserById(@PathParam("id") long id) {
+         *         // User user = userService.getUserById(id);
+         *         // if (user == null) {
+         *         //     return Response.status(Response.Status.NOT_FOUND).build();
+         *         // }
+         *         // return Response.status(Response.Status.OK).entity(user).build();
+         *         //return Response.ok("Hello Word").build();
+         *         return DB.getUserById(id);
+         *     }
+         */
+        Response resBasic = target.path("users").path("32").request().accept(MediaType.TEXT_XML).get();
+        System.out.println(resBasic.readEntity(String.class));
+
+        //----------------------------------------------------------------------
+        // Cambiar datos básicos de nuestro perfil de usuario
+        //----------------------------------------------------------------------
+        /**
+         *     @Path("/users/{id}")
+         *     @PUT
+         *     @Consumes(MediaType.TEXT_XML)
+         *     @Produces(MediaType.TEXT_XML)
+         *     public Response updateUser(@PathParam("id") long id, User updatedUser) {
+         *         // User user = userService.updateUser(id, updatedUser);
+         *         // if (user == null) {
+         *         //     return Response.status(Response.Status.NOT_FOUND).build();
+         *         // }
+         *         // return Response.status(Response.Status.OK).entity(user).build();
+         *         return Response.ok("Hello Word").build();
+         *     }
+         */
+        User cambios = new User();
+        cambios.setName("SilverEagle");
+        cambios.setEmail("nuevomail@mail.com");
+        Response resUserMod = target.path("users").path("1").request().post(Entity.entity(cambios, MediaType.TEXT_XML));
+        System.out.println(resUserMod);
+        //----------------------------------------------------------------------
+        // Borrar nuestro perfil de la red social
+        //----------------------------------------------------------------------
+        /**
+         *   @Path("/users/{id}")
+         *     @DELETE
+         *     @Produces(MediaType.TEXT_XML)
+         *     public Response deleteUser(@PathParam("id") long id) {
+         *         // User user = userService.deleteUser(id);
+         *         // if (user == null) {
+         *         //     return Response.status(Response.Status.NOT_FOUND).build();
+         *         // }
+         *         // return Response.status(Response.Status.OK).entity(user).build();
+         *         return DB.deleteUserById(id);
+         *     }
+         */
+
+        Response resAutoremove = target.path("users").path("1").request().delete();
+        System.out.println(resAutoremove);
+        //----------------------------------------------------------------------
+        // Añadir un nuevo amigo de entre los usuarios registrados en la red social
+        //----------------------------------------------------------------------
+        /**
+         * @POST
+         *     @Path("/users/{id}/friends")
+         *     @Consumes(MediaType.TEXT_XML)
+         *     public Response addFriend(@PathParam("id") Long id, String friend) throws JAXBException {
+         *         User amigo = XmlToUserConverter.fromXml(friend);
+         *         // code to add friend
+         *         return DB.postAddFriend(id,amigo.getUserId().intValue());
+         *     }
+         */
+         //Response resAddFriend  =
+        //----------------------------------------------------------------------
+        // Listado de amigos
+        //----------------------------------------------------------------------
+        /**
+         *   @GET
+         *     @Path("/users/{id}/friends")
+         *     @Produces(MediaType.TEXT_XML)
+         *     public Response getFriends(
+         *             @PathParam("id") Long id,
+         *             @QueryParam("q") String q,
+         *             @QueryParam("limit") Integer limit
+         *
+         *     ) {
+         *         return DB.getUserFriends(id, q, limit);
+         *     }
+         */
+
+        Response resListFriends = target.path("users").path("1").path("friends").queryParam("limit", 3).queryParam("offset", "").request().accept(MediaType.TEXT_XML).get();
+        System.out.println(resBasic.readEntity(String.class));
+        //----------------------------------------------------------------------
+        // Eliminar un amigo
+        //----------------------------------------------------------------------
+        /**
+         *     @Path("/users/{id}")
+         *     @DELETE
+         *     @Produces(MediaType.TEXT_XML)
+         *     public Response deleteUser(@PathParam("id") long id) {
+         *         // User user = userService.deleteUser(id);
+         *         // if (user == null) {
+         *         //     return Response.status(Response.Status.NOT_FOUND).build();
+         *         // }
+         *         // return Response.status(Response.Status.OK).entity(user).build();
+         *         return DB.deleteUserById(id);
+         *     }
+         */
+
+        Response resDelFriend = target.path("users").path("1").path("friends").path("3").request().delete();
+        System.out.println(resDelFriend);
+        //----------------------------------------------------------------------
+        // Un usuario puede publicar un nuevo mensaje en su página personal
+        //----------------------------------------------------------------------
+        /**
+         *  @POST
+         *     @Path("/users/{id}/friends")
+         *     @Consumes(MediaType.TEXT_XML)
+         *     public Response addFriend(@PathParam("id") Long id, String friend) throws JAXBException {
+         *         User amigo = XmlToUserConverter.fromXml(friend);
+         *         // code to add friend
+         *         return DB.postAddFriend(id,amigo.getUserId().intValue());
+         *     }
+         */
+        // Response resPostMsg
+
+
+        //----------------------------------------------------------------------
+        // Obtener una lista de todos los mensajes escritos por un usuario en su página personal.
+        // Además, esta lista debe permitir la opción de ser filtrada por
+        // fecha o limitar la cantidad de información obtenida por número
+        //----------------------------------------------------------------------
+        /**
+         *     @Path("/users/{id}/messages/friends/search")
+         *     @GET
+         *     @Produces(MediaType.TEXT_XML)
+         *     public Response searchUserMessagesWithContent(
+         *             @PathParam("id") Long id,
+         *             @QueryParam("q") String query,
+         *             @QueryParam("limit") Integer limit
+         *
+         *     )
+         *     {
+         *         return DB.getFriendsPostsByContent(id, query, limit);
+         *     }
+         */
+
+         Response resGetSelfMsg = target.path("users").path("1").path("messages").request().get();
+        System.out.println(resGetSelfMsg);
+
+        //----------------------------------------------------------------------
+        // Obtener detalles sobre un mensaje específico
+        //----------------------------------------------------------------------
+        /**
+         *     @Path("/users/{id}/messages/{message_id}")
+         *     @GET
+         *     @Produces(MediaType.TEXT_XML)
+         *     public Response getMessage(
+         *             @PathParam("id") Long id,
+         *             @PathParam("message_id") Long messageId
+         *     ) {
+         *         return DB.getSpecificPost(id, messageId);
+         *
+         *     }
+         */
+         Response resPersonalMsg = target.path("users").path("1").path("messages").path("1").request().get();
+         System.out.println(resPersonalMsg.getStatus());
+
+        //----------------------------------------------------------------------
+        // Un usuario puede editar un mensaje de su página personal
+        //----------------------------------------------------------------------
+
+
+        //----------------------------------------------------------------------
+        //  Un usuario puede eliminar un mensaje de su página personal
+        //----------------------------------------------------------------------
+
+        /**
+         *   @Path("/users/{id}/messages/{message_id}")
+         *     @DELETE
+         *     @Produces(MediaType.TEXT_XML)
+         *     public Response deleteMessage(
+         *             @PathParam("id") Long id,
+         *             @PathParam("message_id") Long messageId
+         *     ) {
+         *         // Eliminar el mensaje de la base de datos
+         *         DB.deleteSpecificPost(id, messageId);
+         *
+         *         // Devolver una respuesta que indique que el mensaje se eliminó correctamente
+         *         return Response.status(Response.Status.OK)
+         *                 .entity("<message>El mensaje se eliminó correctamente</message>")
+         *                 .build();
+         *     }
+         */
+        Response resRmvMsg =
+                JAXBFriendModel deleteFriend = new JAXBFriendModel();
+        deleteFriend.setIdFriend(7);
+        Response response8 = target.path("users")
+                .path("2").path("friends")
+                .path("delete").request()
+                .post(Entity.entity(deleteFriend, MediaType.TEXT_XML));
+        System.out.println(response8);
+
+
+
+
+
+
 
     }
 

@@ -77,13 +77,15 @@ public class API {
     }
 
     // POST /users/{id}/friends
+// POST /users/{id}/friends
     @POST
     @Path("/users/{id}/friends")
-    @Consumes(MediaType.TEXT_XML)
-    public Response addFriend(@PathParam("id") Long id, String friend) throws JAXBException {
-        User amigo = XmlToUserConverter.fromXml(friend);
+    @Consumes(MediaType.APPLICATION_XML)
+    public Response addFriend(@PathParam("id") String id, String query) throws JAXBException {
+        User user = XmlToUserConverter.fromXml(query);
         // code to add friend
-        return DB.postAddFriend(id,amigo.getUserId().intValue());
+        DB.insertFriend(user.getUserId(), user);
+        return Response.status(Response.Status.CREATED).build();
     }
 
     // GET /users/{id}/friends
