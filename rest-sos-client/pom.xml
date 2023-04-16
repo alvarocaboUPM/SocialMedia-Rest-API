@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>rest-sos-api</groupId>
-    <artifactId>rest-sos</artifactId>
+    <artifactId>rest-sos-client</artifactId>
     <packaging>war</packaging>
     <version>2.0</version>
     <name>rest-sos</name>

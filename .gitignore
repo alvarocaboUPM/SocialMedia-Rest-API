@@ -5,4 +5,4 @@ rest-sos/target
 *.war
 rest-sos/bin
 rest-sos/.env
-rest-sos/rest-sos.iml
+*.iml
