@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 public class TestDbConnection {
 
     public static void main(String[] args) {
@@ -14,12 +16,15 @@ public class TestDbConnection {
         ResultSet rs = null;
 
         try {
+            Dotenv dotenv =Dotenv.load();
             // Register JDBC driver
             Class.forName("com.mysql.jdbc.Driver");
 
             // Open a connection
             System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SOS", "root", "Toor.-.777");
+            String url = "jdbc:mysql://" + dotenv.get("DB_HOST")+":"+dotenv.get("DB_PORT") + "/" + dotenv.get("DB_NAME"); // URL para la conexión
+;
+            conn = DriverManager.getConnection(url, dotenv.get("DB_USER"), dotenv.get("DB_PW"));
 
             // Execute a query
             System.out.println("Creating statement...");
