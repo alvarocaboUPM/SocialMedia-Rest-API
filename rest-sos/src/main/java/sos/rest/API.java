@@ -126,6 +126,7 @@ public class API {
         //return Response.ok("Hello").build();
         return DB.getPosts(id, filter, limit, offset, startDate, endDate);
     }
+    
 
     // GET /users/{id}/messages/{message_id}
     @Path("/users/{id}/messages/{message_id}")
