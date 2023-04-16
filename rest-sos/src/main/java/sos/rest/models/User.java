@@ -1,79 +1,73 @@
-package sos.rest.models;
+    package sos.rest.models;
 
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
+    import javax.xml.bind.annotation.XmlElement;
+    import javax.xml.bind.annotation.XmlElementWrapper;
+    import javax.xml.bind.annotation.XmlRootElement;
 
-import java.util.Set;
+    import java.util.Set;
 
-@XmlRootElement(name="user")
-public class User {
+    @XmlRootElement(name="user")
+    public class User {
 
-@XmlElement(name = "userId")
-private Long userId;
 
-@XmlElement(name = "name")
-private String name;
+    private Long userId;
+        @XmlElement(name = "userId")
+        public Long getUserId() {
+            return userId;
+        }
+    public void setUserId(Long userId) {this.userId = userId;}
 
-@XmlElement(name = "email")
-private String email;
 
-@XmlElement(name = "age")
-private Integer age;
+    private String name;
+        @XmlElement(name = "name")
+        public String getName() {
+            return name;
+        }
+        public void setName(String name) {
+            this.name = name;
+        }
 
-@XmlElementWrapper(name = "friends")
-@XmlElement(name = "friend")
-private Set<User> friends;
 
-public User() {}
 
-public User(String name, String email, Integer age) {
-    this.name = name;
-    this.email = email;
-    this.age = age;
-}
 
-// Getters and setters
+    private String email;
+        @XmlElement(name = "email")
+        public String getEmail() {
+            return email;
+        }
+        public void setEmail(String email) {
+            this.email = email;
+        }
 
-public Long getUserId() {
-    return userId;
-}
 
-public void setUserId(Long userId) {
-    this.userId = userId;
-}
+    private Integer age;
+        @XmlElement(name = "age")
+        public Integer getAge() {
+            return age;
+        }
 
-public String getName() {
-    return name;
-}
+        public void setAge(Integer age) {
+            this.age = age;
+        }
 
-public void setName(String name) {
-    this.name = name;
-}
+    private Set<User> friends;
+        @XmlElementWrapper(name = "friends")
+        @XmlElement(name = "friend")
+        public Set<User> getFriends() {
+            return friends;
+        }
 
-public String getEmail() {
-    return email;
-}
+        public void setFriends(Set<User> friends) {
+            this.friends = friends;
+        }
 
-public void setEmail(String email) {
-    this.email = email;
-}
+    public User() {}
 
-public Integer getAge() {
-    return age;
-}
+    public User(String name, String email, Integer age) {
+        this.name = name;
+        this.email = email;
+        this.age = age;
+    }
 
-public void setAge(Integer age) {
-    this.age = age;
-}
-
-public Set<User> getFriends() {
-    return friends;
-}
-
-public void setFriends(Set<User> friends) {
-    this.friends = friends;
-}
-
-}
+    }
