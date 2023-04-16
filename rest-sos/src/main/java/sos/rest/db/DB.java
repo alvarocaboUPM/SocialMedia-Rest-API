@@ -7,8 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+import io.github.cdimascio.dotenv.Dotenv;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -23,20 +22,18 @@ public class DB {
 	}
 
 	private static void connectDB() {
+		Dotenv dotenv = Dotenv.load();
 		if (connection == null) {
 			try {
 				Class.forName("com.mysql.jdbc.Driver"); // Busca que está instanciado el driver
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-			String host = "localhost:3306";
-			String user = "root";
-			String passwd = "Toor.-.777";
-			String database = "SOS";
-			String url = "jdbc:mysql://" + host + "/" + database; // URL para la conexión
+
+			String url = "jdbc:mysql://" + dotenv.get("DB_HOST")+":"+dotenv.get("DB_PORT") + "/" + dotenv.get("DB_NAME"); // URL para la conexión
 
 			try {
-				connection = DriverManager.getConnection(url, user, passwd); // Conectamos con estos credenciales
+				connection = DriverManager.getConnection(url, dotenv.get("DB_USER"), dotenv.get("DB_PW")); // Conectamos con estos credenciales
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -536,7 +533,7 @@ public class DB {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param user_id
 	 * @param username
 	 * @param email
@@ -544,7 +541,6 @@ public class DB {
 	 * @return
 	 */
 
-	//Working...
 	public static Response createUser(Long user_id, String username, String email, int age) {
 		Statement sentence = null;
 		String query = "INSERT INTO USERS\n"
@@ -668,74 +664,10 @@ public class DB {
 		return Response.status(Response.Status.BAD_REQUEST).build();
 	}
 
-	public static Boolean postModifyUsername(Long user_id, String username) {
-		String query = "UPDATE USERS u\n"
-				+ "SET u.username = '" + username + "'\n"
-				+ "WHERE u.user_id = " + user_id;
-		Statement sentence = null;
-		Boolean result = false;
-		try {
-			sentence = connection.createStatement();
-			int rs = sentence.executeUpdate(query);
-			if (rs != 0) {
-				result = true;
-			}
-			sentence.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity(new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n")).build();
-		}
-		return result;
-	}
 
 	public static Boolean postModifyName(Long user_id, String name) {
 		String query = "UPDATE USERS u\n"
 				+ "SET u.name = '" + name + "'\n"
-				+ "WHERE u.user_id = " + user_id;
-		Boolean result = false;
-		Statement sentence = null;
-		try {
-			sentence = connection.createStatement();
-			int rs = sentence.executeUpdate(query);
-			if (rs != 0) {
-				result = true;
-			}
-			sentence.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			e.printStackTrace();
-			Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity(new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n")).build();
-		}
-		return result;
-	}
-
-	public static Boolean postModifyLastname(Long user_id, String lastname) {
-		String query = "UPDATE USERS u\n"
-				+ "SET u.lastname = '" + lastname + "'\n"
-				+ "WHERE u.user_id = " + user_id;
-		Boolean result = false;
-		Statement sentence = null;
-		try {
-			sentence = connection.createStatement();
-			int rs = sentence.executeUpdate(query);
-			if (rs != 0) {
-				result = true;
-			}
-			sentence.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			e.printStackTrace();
-			Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity(new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n")).build();
-		}
-		return result;
-	}
-
-	public static Boolean postModifyGender(Long user_id, String gender) {
-		String query = "UPDATE USERS u\n"
-				+ "SET u.gender = '" + gender + "'\n"
 				+ "WHERE u.user_id = " + user_id;
 		Boolean result = false;
 		Statement sentence = null;
@@ -773,28 +705,6 @@ public class DB {
 			e.printStackTrace();
 			Response.status(Response.Status.INTERNAL_SERVER_ERROR)
 					.entity(new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n")).build();
-		}
-		return result;
-	}
-
-	public static Boolean postModifyPhone(Long user_id, String phone) {
-		String query = "UPDATE USERS u\n"
-				+ "SET u.phone = '" + phone + "'\n"
-				+ "WHERE u.user_id = " + user_id;
-		Boolean result = false;
-		Statement sentence = null;
-		try {
-			sentence = connection.createStatement();
-			int rs = sentence.executeUpdate(query);
-			if (rs != 0) {
-				result = true;
-			}
-			sentence.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity(new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n")).build();
-
 		}
 		return result;
 	}

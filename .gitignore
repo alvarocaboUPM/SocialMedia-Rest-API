@@ -4,3 +4,4 @@ rest-sos/target
 *.jar
 *.war
 rest-sos/bin
+rest-sos/.env
