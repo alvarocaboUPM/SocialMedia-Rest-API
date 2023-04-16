@@ -98,6 +98,73 @@ public class DB {
 		return Response.status(st).entity(result).build();
 	}
 
+	public static Response getUserById(Long userId) {
+		connectDB();
+		String sql = "SELECT * FROM users WHERE user_id = ?";
+		PreparedStatement stmt;
+		String result = "<?xml version=\"1.0\"?>\n";
+		Status st = Status.OK;
+		try {
+			stmt = connection.prepareStatement(sql);
+			stmt.setLong(1, userId);
+			ResultSet rs = stmt.executeQuery();
+	
+			if (!rs.next()) {
+				st = Response.Status.NOT_FOUND;
+				result += "<message>User with id " + userId + " not found</message>";
+			} else {
+				String name = rs.getString("name");
+				String email = "" + rs.getString("email");
+				String age = "" + rs.getInt("age");
+	
+				result += "<user>\n"
+						+ "<userId>" + userId + "</userId>\n"
+						+ "<name>" + name + "</name>\n"
+						+ "<email>" + email + "</email>\n"
+						+ "<age>" + age + "</age>\n"
+						+ "</user>\n";
+			}
+	
+			stmt.close();
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			st = Response.Status.INTERNAL_SERVER_ERROR;
+			result = "<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n";
+		}
+	
+		return Response.status(st).entity(result).build();
+	}
+
+	public static Response deleteUserById(Long userId) {
+		connectDB();
+		String sql = "DELETE FROM users WHERE user_id = ?";
+		PreparedStatement stmt;
+		String result = "<?xml version=\"1.0\"?>\n";
+		Status st = Status.OK;
+		try {
+			stmt = connection.prepareStatement(sql);
+			stmt.setLong(1, userId);
+			int rowsAffected = stmt.executeUpdate();
+
+			if (rowsAffected == 0) {
+				st = Response.Status.NOT_FOUND;
+				result += "<message>User with id " + userId + " not found</message>";
+			} else {
+				result += "<message>User with id " + userId + " has been deleted</message>";
+			}
+
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			st = Response.Status.INTERNAL_SERVER_ERROR;
+			result = "<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n";
+		}
+
+		return Response.status(st).entity(result).build();
+	}
+
+
 	/**
 	 * @param user_id
 	 * @param limit
@@ -186,7 +253,105 @@ public class DB {
 		return Response.status(Response.Status.OK).entity(number).build();
 	}
 
-	public static Response getFriends(Long user_id, String q, Integer limit, Integer offset) {
+public static Response deleteSpecificPost(Long user_id, Long message_id) {
+	connectDB();
+	PreparedStatement sentence = null;
+	String query = "DELETE FROM messages WHERE message_id = ? AND author_id IN (SELECT user_id FROM users WHERE user_id = ?)";
+	try {
+		sentence = connection.prepareStatement(query);
+		sentence.setLong(1, message_id);
+		sentence.setLong(2, user_id);
+		int rowsAffected = sentence.executeUpdate();
+		if (rowsAffected == 0) {
+			return Response.status(Response.Status.NOT_FOUND)
+					.entity(new String("<message>The post with id " + message_id + " was not found for user " + user_id + "</message>")).build();
+		}
+		sentence.close();
+	} catch (SQLException e) {
+		e.printStackTrace();
+		return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+				.entity(new String("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n")).build();
+	}
+	return Response.status(Response.Status.OK).entity(new String("<message>The post with id " + message_id + " was successfully deleted for user " + user_id + "</message>")).build();
+}
+public static Response getFriendsPostsByDate(Long userId, String startDate, String endDate, Integer limit) {
+    connectDB();
+    String query = "SELECT m.message, m.time, u.name " +
+                   "FROM messages m " +
+                   "JOIN friends f ON m.author_id = f.friend_id " +
+                   "JOIN users u ON f.friend_id = u.user_id " +
+                   "WHERE f.user_id = ? "/*AND m.time BETWEEN ? AND ?"*/;
+	if (limit != null) 
+		query += "LIMIT " + limit + " \n";
+    try {
+        PreparedStatement stmt = connection.prepareStatement(query);
+        stmt.setLong(1, userId);
+       /*stmt.setString(2, startDate );
+        stmt.setString(3, endDate);*/
+        ResultSet rs = stmt.executeQuery();
+
+        String result = "<?xml version=\"1.0\"?>\n<messages>\n";
+        while (rs.next()) {
+            String message = rs.getString("message");
+            Date date = rs.getDate("time");
+            String authorName = rs.getString("name");
+            result += "<message>\n"
+                      + "<text>" + message + "</text>\n"
+                      + "<time>" + date + "</time>\n"
+                      + "<author>" + authorName + "</author>\n"
+                      + "</message>\n";
+        }
+        result += "</messages>";
+        stmt.close();
+        rs.close();
+        return Response.ok().entity(result).build();
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                       .entity("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n").build();
+    }
+}
+
+
+public static Response getFriendsPostsByContent(Long userId, String searchTerm, Integer limit) {
+    connectDB();
+    String query = "SELECT m.message, m.time, u.name " +
+                   "FROM messages m " +
+                   "JOIN friends f ON m.author_id = f.friend_id " +
+                   "JOIN users u ON f.friend_id = u.user_id " +
+                   "WHERE f.user_id = ? AND m.message LIKE ? ";
+    if (limit != null) {
+        query += "LIMIT " + limit + ";";
+    }
+    try {
+        PreparedStatement stmt = connection.prepareStatement(query);
+        stmt.setLong(1, userId);
+        stmt.setString(2, "%" + searchTerm + "%");
+        ResultSet rs = stmt.executeQuery();
+
+        String result = "<?xml version=\"1.0\"?>\n<messages>\n";
+        while (rs.next()) {
+            String message = rs.getString("message");
+            Date date = rs.getDate("time");
+            String authorName = rs.getString("name");
+            result += "<message>\n"
+                      + "<text>" + message + "</text>\n"
+                      + "<time>" + date + "</time>\n"
+                      + "<author>" + authorName + "</author>\n"
+                      + "</message>\n";
+        }
+        result += "</messages>";
+        stmt.close();
+        rs.close();
+        return Response.ok().entity(result).build();
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                       .entity("<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n").build();
+    }
+}
+
+	/*public static Response getFriends(Long user_id, String q, Integer limit, Integer offset) {
 		PreparedStatement sentence = null;
 		PreparedStatement sentenceFriend = null;
 		String result = "<?xml version=\"1.0\"?>\n<Friends>\n";
@@ -233,7 +398,128 @@ public class DB {
 		}
 		result += "</Friends>";
 		return Response.status(Response.Status.OK).entity(result).build();
+	}*/
+	public static Response getUserFriends(Long userId, String namePattern, Integer limit) {
+		connectDB();
+		String sql = "SELECT * FROM friends f, users u WHERE f.user_id = ? AND u.user_id = f.user_id";
+		if (namePattern != null && !namePattern.isEmpty()) {
+			sql += " AND name LIKE ?";
+		}
+		if (limit != null && limit > 0) {
+			sql += " LIMIT ?";
+		}
+		PreparedStatement stmt;
+		String result = "<?xml version=\"1.0\"?>\n";
+		Status st = Status.OK;
+		try {
+			stmt = connection.prepareStatement(sql);
+			stmt.setLong(1, userId);
+			int paramIndex = 2;
+			if (namePattern != null && !namePattern.isEmpty()) {
+				stmt.setString(paramIndex++, "%" + namePattern + "%");
+			}
+			if (limit != null && limit > 0) {
+				stmt.setInt(paramIndex, limit);
+			}
+			ResultSet rs = stmt.executeQuery();
+	
+			if (!rs.next()) {
+				st = Response.Status.NOT_FOUND;
+				result += "<message>User with id " + userId + " has no friends</message>";
+			} else {
+				result += "<userFriends>\n";
+				do {
+					Long friendId = rs.getLong("friend_id");
+					String name = rs.getString("name");
+					String email = "" + rs.getString("email");
+					String age = "" + rs.getInt("age");
+	
+					result += "<friend>\n"
+							+ "<friendId>" + friendId + "</friendId>\n"
+							+ "<name>" + name + "</name>\n"
+							+ "<email>" + email + "</email>\n"
+							+ "<age>" + age + "</age>\n"
+							+ "</friend>\n";
+				} while (rs.next());
+				result += "</userFriends>\n";
+			}
+	
+			stmt.close();
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			st = Response.Status.INTERNAL_SERVER_ERROR;
+			result = "<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n";
+		}
+	
+		return Response.status(st).entity(result).build();
 	}
+
+	public static Response deleteUserFriend(Long userId, Long friendId) {
+		connectDB();
+		String sql = "DELETE FROM friends WHERE user_id = ? AND friend_id = ?";
+		PreparedStatement stmt;
+		String result = "<?xml version=\"1.0\"?>\n";
+		Status st = Status.OK;
+		try {
+			stmt = connection.prepareStatement(sql);
+			stmt.setLong(1, userId);
+			stmt.setLong(2, friendId);
+			int rowsAffected = stmt.executeUpdate();
+
+			if (rowsAffected == 0) {
+				st = Response.Status.NOT_FOUND;
+				result += "<message>Friend with id " + friendId + " not found for user with id " + userId + "</message>";
+			} else {
+				result += "<message>Friend with id " + friendId + " has been removed from user with id " + userId + "</message>";
+			}
+
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			st = Response.Status.INTERNAL_SERVER_ERROR;
+			result = "<SQL ERROR>\n\t" + e.getMessage() + "\n</SQL ERROR>\n";
+		}
+
+		return Response.status(st).entity(result).build();
+	}
+
+	
+	public static int addUserToDB(User user) {
+		connectDB();
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try {
+            
+
+            // Preparar una sentencia SQL para insertar un nuevo usuario
+            String query = "INSERT INTO users (name, email, age) VALUES (?, ?, ?);";
+            stmt = conn.prepareStatement(query);
+            //stmt.setLong(1, user.getUserId());
+            stmt.setString(1, user.getName());
+            stmt.setString(2, user.getEmail());
+            stmt.setInt(3, user.getAge());
+
+            // Ejecutar la sentencia SQL para insertar un nuevo usuario
+            return stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Si se produce un error, devolver -1 para indicar que la inserción falló
+            return -1;
+        } finally {
+            try {
+                // Cerrar la conexión y la sentencia SQL
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 	/**
 	 * 
@@ -243,17 +529,18 @@ public class DB {
 	 * @param age
 	 * @return
 	 */
-	public static Response createUser(Long user_id, String username, String email, int age) {
-		Statement sentence = null;
-		String query = "INSERT INTO USERS\n"
-				+ "(user_id, name, email, age)\n"
+	public static Response createUser(String username, String email, Integer age) {
+		connectDB();
+		PreparedStatement sentence = null;
+		String query = "INSERT INTO users\n"
+				+ "(name, email, age)\n"
 				+ "VALUES\n"
-				+ "('" + user_id + "', '" + username
-				+ email + "', '"
-				+ age + "', '"
-				+ "');";
+				+ "(?, ?, ?);";
 		try {
-			sentence = connection.createStatement();
+			sentence = connection.prepareStatement(query);
+			sentence.setString(1, username);
+			sentence.setString(2, email);
+			sentence.setInt(3, age);
 			int rs = sentence.executeUpdate(query);
 			if (rs == 0) {
 				return Response.status(Response.Status.BAD_REQUEST).build();
@@ -286,10 +573,10 @@ public class DB {
 		return Response.status(Response.Status.BAD_REQUEST).build();
 	}
 
-	public static Response postAddPost(Integer idPost, String postBody, String time, Integer user) {
+	public static Response postAddPost(Long idPost, String postBody, String time, Integer user) {
 		Statement sentence = null;
-		String query = "INSERT INTO POST\n"
-				+ "(idPost, postBody, time, user)\n"
+		String query = "INSERT INTO messages\n"
+				+ "(message_id, message, time, author_id)\n"
 				+ "VALUES\n"
 				+ "('" + idPost + "', '" + postBody + "', '" + time + "', '" + user + "');";
 

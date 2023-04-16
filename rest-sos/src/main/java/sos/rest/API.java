@@ -16,11 +16,10 @@ public class API {
     @Path("/users")
     @POST
     @Consumes(MediaType.APPLICATION_XML)
-    @Produces(MediaType.TEXT_XML)
+    @Produces(MediaType.APPLICATION_XML)
     public Response addUser(User user) {
-        return DB.createUser(user.getUserId(), user.getName(), user.getEmail(), user.getAge());
+        return DB.createUser(user.getName(), user.getEmail(), user.getAge());
     }
-
     @Path("/users")
     @GET
     @Produces(MediaType.TEXT_XML)
@@ -64,7 +63,7 @@ public class API {
         //     return Response.status(Response.Status.NOT_FOUND).build();
         // }
         // return Response.status(Response.Status.OK).entity(user).build();
-        return Response.ok("Hello Word").build();
+        return DB.deleteUserById(id);
     }
 
     // POST /users/{id}/friends
@@ -86,7 +85,7 @@ public class API {
         @QueryParam("limit") int limit,
         @QueryParam("offset") Integer offset
     ) {
-        return DB.getFriends(id, q, limit, offset);
+        return DB.getUserFriends(id, q, limit);
     }
 
     // DELETE /users/{id}/friends/{friend_id}
@@ -94,15 +93,15 @@ public class API {
     @Path("/users/{id}/friends/{friend_id}")
     public Response deleteFriend(
         @PathParam("id") Long id,
-        @PathParam("friend_id") String friendId
+        @PathParam("friend_id") Long friendId
     ) {
         // code to delete friend
-        return Response.ok().build();
+        return DB.deleteUserFriend(id, friendId);
     }
 
     // POST /users/{id}/messages
-    @POST
     @Path("/users/{id}/messages")
+    @POST
     @Consumes(MediaType.TEXT_XML)
     public Response addMessage(
         @PathParam("id") Long id,
@@ -129,8 +128,8 @@ public class API {
     }
 
     // GET /users/{id}/messages/{message_id}
-    @GET
     @Path("/users/{id}/messages/{message_id}")
+    @GET
     @Produces(MediaType.TEXT_XML)
     public Response getMessage(
         @PathParam("id") Long id,
@@ -138,13 +137,22 @@ public class API {
     ) {
         return null;
 
-        //TODO: Implementar esto en MessageService
-        // Message message = messageService.getMessageByID(Long id, long message_id);
-        // if (message == null) {
-        //     return Response.status(Response.Status.NOT_FOUND).build();
-        // } else {
-        //     return Response.ok(message).build();
-        // }
+    }
+
+    @Path("/users/{id}/messages/{message_id}")
+    @DELETE
+    @Produces(MediaType.TEXT_XML)
+    public Response deleteMessage(
+        @PathParam("id") Long id,
+        @PathParam("message_id") Long messageId
+    ) {
+        // Eliminar el mensaje de la base de datos
+        DB.deleteSpecificPost(id, messageId);
+
+        // Devolver una respuesta que indique que el mensaje se eliminó correctamente
+        return Response.status(Response.Status.OK)
+            .entity("<message>El mensaje se eliminó correctamente</message>")
+            .build();
     }
 
     @Path("/users/users/{id}/messages/friends/search")
