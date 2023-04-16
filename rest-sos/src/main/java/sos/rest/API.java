@@ -15,8 +15,8 @@ public class API {
 
     @Path("/users")
     @POST
-    @Consumes(MediaType.TEXT_XML)
-    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_XML)
     public Response addUser(String entry) throws JAXBException {
         User user = XmlToUserConverter.fromXml(entry);
         // Agregar usuario a la base de datos
@@ -66,7 +66,7 @@ public class API {
 
     @Path("/users/{id}")
     @DELETE
-    @Produces(MediaType.TEXT_XML)
+    @Produces(MediaType.APPLICATION_XML)
     public Response deleteUser(@PathParam("id") long id) {
         // User user = userService.deleteUser(id);
         // if (user == null) {
@@ -77,7 +77,6 @@ public class API {
     }
 
     // POST /users/{id}/friends
-// POST /users/{id}/friends
     @POST
     @Path("/users/{id}/friends")
     @Consumes(MediaType.APPLICATION_XML)
@@ -115,7 +114,7 @@ public class API {
     // POST /users/{id}/messages
     @POST
     @Path("/users/{id}/messages")
-    @Consumes(MediaType.TEXT_XML)
+    @Consumes(MediaType.APPLICATION_XML)
     public Response addMessage(
             @PathParam("id") Long id,
             Message message
@@ -127,7 +126,7 @@ public class API {
     // GET /users/{id}/messages
     @GET
     @Path("/users/{id}/messages")
-    @Produces(MediaType.TEXT_XML)
+    @Produces(MediaType.APPLICATION_XML)
     public Response getMessages(
             @PathParam("id") Long id,
             @QueryParam("filter") String filter,
@@ -161,7 +160,7 @@ public class API {
 
     @Path("/users/{id}/messages/{message_id}")
     @DELETE
-    @Produces(MediaType.TEXT_XML)
+    @Produces(MediaType.APPLICATION_XML)
     public Response deleteMessage(
             @PathParam("id") Long id,
             @PathParam("message_id") Long messageId
