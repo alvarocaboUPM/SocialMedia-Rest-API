@@ -19,7 +19,7 @@ public class TestDbConnection {
 
             // Open a connection
             System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SOS", "pablo@localhost", "123");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SOS", "pablo", "123");
 
             // Execute a query
             System.out.println("Creating statement...");

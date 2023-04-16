@@ -38,3 +38,10 @@ VALUES
     (2, 1, 'I am good, thanks for asking!', '2022-01-01 10:01:00'),
     (1, 2, 'Want to grab lunch?', '2022-01-02 12:00:00'),
     (2, 1, 'Sure, where do you want to go?', '2022-01-02 12:05:00');
+
+INSERT INTO friends (user_id, friend_id)
+VALUES
+    (1, 2),
+    (1, 3),
+    (2, 4),
+    (2, 3);
