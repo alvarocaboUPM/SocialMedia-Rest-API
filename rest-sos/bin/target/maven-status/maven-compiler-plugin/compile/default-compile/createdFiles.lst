@@ -1,6 +1,0 @@
-sos/rest/API.class
-sos/rest/services/UserService.class
-sos/rest/db/DB.class
-sos/rest/db/TestDbConnection.class
-sos/rest/models/Message.class
-sos/rest/models/User.class
