@@ -18,16 +18,16 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "text/xml"
+						"value": "application/xml"
 					},
 					{
 						"key": "Accept",
-						"value": "text/xml"
+						"value": "application/xml"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"userId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"age\": \"<integer>\"\n}"
+					"raw": "<user>\n  <name>Test</name>\n  <email>test12@example.com</email>\n  <age>25</age>\n</user>"
 				},
 				"url": {
 					"raw": "{{baseUrl}}/users",
@@ -41,25 +41,23 @@
 			},
 			"response": [
 				{
-					"id": "57941c13-464c-45c5-bb8b-63f7d2c7af12",
-					"name": "User with 'username' added",
+					"id": "570e3911-d6b8-4e70-82f4-7079e68b3f53",
+					"name": "Añadir un usuario nuevo a la red",
 					"originalRequest": {
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "text/xml"
+								"value": "application/xml"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"userId\": \"<string>\",\n\t\"name\": \"<string>\",\n\t\"email\": \"<email>\",\n\t\"age\": \"<integer>\"\n}",
-							"options": {
-								"raw": {
-									"headerFamily": "json",
-									"language": "json"
-								}
-							}
+							"raw": "<user>\n  <name>Test</name>\n  <email>new1@example.com</email>\n  <age>25</age>\n</user>"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/users",
@@ -71,17 +69,81 @@
 							]
 						}
 					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "Text",
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "0"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 16 Apr 2023 21:43:11 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=20"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": []
+				},
+				{
+					"id": "8f8a8084-9458-4da4-8fbb-6a427bc60fd0",
+					"name": "Usuario repetido",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/xml"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<user>\n  <name>Test</name>\n  <email>test12@example.com</email>\n  <age>25</age>\n</user>"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "xml",
 					"header": [
 						{
 							"key": "Content-Type",
-							"value": "text/xml"
+							"value": "application/xml"
+						},
+						{
+							"key": "Content-Length",
+							"value": "85"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 16 Apr 2023 21:46:04 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
 						}
 					],
 					"cookie": [],
-					"body": "{\n  \"userId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"age\": \"<integer>\"\n}"
+					"body": "<SQL ERROR>\n\tDuplicate entry 'test12@example.com' for key 'users.email'\n</SQL ERROR>"
 				}
 			]
 		},
@@ -100,7 +162,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{baseUrl}}/users",
+					"raw": "{{baseUrl}}/users?q= ",
 					"host": [
 						"{{baseUrl}}"
 					],
@@ -109,10 +171,9 @@
 					],
 					"query": [
 						{
-							"key": "q",
-							"value": " ",
 							"description": "Filtro de búsqueda por nombre",
-							"disabled": true
+							"key": "q",
+							"value": " "
 						}
 					]
 				}
@@ -147,7 +208,8 @@
 					"header": [
 						{
 							"key": "Content-Type",
-							"value": "text/xml"
+							"value": "application/json",
+							"enabled": true
 						}
 					],
 					"cookie": [],
@@ -188,41 +250,7 @@
 			},
 			"response": [
 				{
-					"id": "8ba641ff-3483-47be-8778-e82d66ce9b23",
-					"name": "Datos del usuario",
-					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/users/:id",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id"
-								}
-							]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "Text",
-					"header": [
-						{
-							"key": "Content-Type",
-							"value": "text/xml"
-						}
-					],
-					"cookie": [],
-					"body": "{\n  \"userId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"age\": \"<integer>\"\n}"
-				},
-				{
-					"id": "ebcd9b0e-a554-4245-a728-45285f5a8e8a",
+					"id": "876be369-d5a8-477a-a7a7-6f9bdb13a6ee",
 					"name": "Invalid ID type supplied",
 					"originalRequest": {
 						"method": "GET",
@@ -248,34 +276,6 @@
 					"_postman_previewlanguage": "Text",
 					"header": [],
 					"cookie": []
-				},
-				{
-					"id": "721c1583-d79e-4d54-b9b4-6bae4b77e3ee",
-					"name": "User not found",
-					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/users/:id",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id"
-								}
-							]
-						}
-					},
-					"status": "Not Found",
-					"code": 404,
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": []
 				}
 			]
 		},
@@ -290,17 +290,13 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "text/xml"
+						"value": "application/json"
 					},
 					{
 						"key": "Accept",
 						"value": "text/xml"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"userId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"age\": \"<integer>\"\n}"
-				},
 				"url": {
 					"raw": "{{baseUrl}}/users/:id",
 					"host": [
@@ -362,7 +358,8 @@
 					"header": [
 						{
 							"key": "Content-Type",
-							"value": "text/xml"
+							"value": "application/json",
+							"enabled": true
 						}
 					],
 					"cookie": [],
@@ -506,7 +503,8 @@
 					"header": [
 						{
 							"key": "Content-Type",
-							"value": "text/xml"
+							"value": "application/json",
+							"enabled": true
 						}
 					],
 					"cookie": [],
@@ -581,13 +579,9 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "text/xml"
+						"value": "application/json"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"userId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"age\": \"<integer>\"\n}"
-				},
 				"url": {
 					"raw": "{{baseUrl}}/users/:id/friends",
 					"host": [
@@ -817,7 +811,8 @@
 					"header": [
 						{
 							"key": "Content-Type",
-							"value": "text/xml"
+							"value": "application/json",
+							"enabled": true
 						}
 					],
 					"cookie": [],
@@ -836,17 +831,13 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "text/xml"
+						"value": "application/json"
 					},
 					{
 						"key": "Accept",
 						"value": "text/xml"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": "<string>"
-				},
 				"url": {
 					"raw": "{{baseUrl}}/users/:id/friends/:friend_id",
 					"host": [
@@ -919,7 +910,8 @@
 					"header": [
 						{
 							"key": "Content-Type",
-							"value": "text/xml"
+							"value": "application/json",
+							"enabled": true
 						}
 					],
 					"cookie": [],
@@ -989,7 +981,8 @@
 					"header": [
 						{
 							"key": "Content-Type",
-							"value": "text/xml"
+							"value": "application/json",
+							"enabled": true
 						}
 					],
 					"cookie": [],
@@ -1059,7 +1052,8 @@
 					"header": [
 						{
 							"key": "Content-Type",
-							"value": "text/xml"
+							"value": "application/json",
+							"enabled": true
 						}
 					],
 					"cookie": [],
@@ -1196,7 +1190,8 @@
 					"header": [
 						{
 							"key": "Content-Type",
-							"value": "text/xml"
+							"value": "application/json",
+							"enabled": true
 						}
 					],
 					"cookie": [],
@@ -1341,7 +1336,8 @@
 					"header": [
 						{
 							"key": "Content-Type",
-							"value": "text/xml"
+							"value": "application/json",
+							"enabled": true
 						}
 					],
 					"cookie": [],
@@ -1486,7 +1482,8 @@
 					"header": [
 						{
 							"key": "Content-Type",
-							"value": "text/xml"
+							"value": "application/json",
+							"enabled": true
 						}
 					],
 					"cookie": [],
@@ -1624,7 +1621,8 @@
 					"header": [
 						{
 							"key": "Content-Type",
-							"value": "text/xml"
+							"value": "application/json",
+							"enabled": true
 						}
 					],
 					"cookie": [],
@@ -1765,7 +1763,8 @@
 					"header": [
 						{
 							"key": "Content-Type",
-							"value": "text/xml"
+							"value": "application/json",
+							"enabled": true
 						}
 					],
 					"cookie": [],

@@ -1,24 +1,24 @@
 openapi: "3.0.0"
 info:
-    version: "1.0.3"
+    version: "1.0.4"
     title: "SOS API"
     description: Social network REST Api
 servers:
-    - url: http://localhost:8000
+    - url: http://localhost:8080
 paths:
     /users:
         post:
             summary: Añadir un usuario nuevo a la red
             requestBody:
                 content:
-                    application/json:
+                    application/xml:
                         schema:
                             $ref: "#/components/schemas/User"
             responses:
                 "200":
                     description: User with "username" added
                     content:
-                        application/json:
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/User"
                 
@@ -34,7 +34,7 @@ paths:
                 "200":
                     description: Lista de usuarios
                     content:
-                        application/json:
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserList"
     /users/{id}:
@@ -44,7 +44,8 @@ paths:
               in: path
               required: true
               schema:
-                    type: string 
+                    type: integer
+                    format: int64
                     description: The unique identifier for the user.
         get:
             summary: Ver los datos básicos de un usuario
@@ -52,7 +53,7 @@ paths:
                 "200":
                     description: Datos del usuario
                     content:
-                        application/json:
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/User"
                 "404":
@@ -64,14 +65,14 @@ paths:
             summary: Cambiar datos básicos de nuestro perfil de usuario
             requestBody:
                 content:
-                    application/json:
+                    application/xml:
                         schema:
                             $ref: "#/components/schemas/User"
             responses:
                 "200":
                     description: Usuario actualizado
                     content:
-                        application/json:
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/User"
                 "404":
@@ -85,7 +86,7 @@ paths:
                 "200":
                     description: Usuario eliminado
                     content:
-                        application/json:
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/User"
                 "404":
@@ -101,13 +102,14 @@ paths:
               in: path
               required: true
               schema:
-                    type: string 
+                    type: integer
+                    format: int64
                     description: The unique identifier for the user.
         post:
             summary: Añadir un nuevo amigo de entre los usuarios registrados en la red social
             requestBody:
                 content:
-                    application/json:
+                    application/xml:
                         schema:
                             $ref: "#/components/schemas/User"
             responses:
@@ -138,7 +140,7 @@ paths:
                 "200":
                     description: Lista de amigos
                     content:
-                        application/json:
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserList"
     /users/{id}/friends/{friend_id}:
@@ -148,20 +150,22 @@ paths:
               in: path
               required: true
               schema:
-                    type: string 
+                    type: integer
+                    format: int64
                     description: The unique identifier for the user.
             - name: friend_id
               description: Identificador de usuario del amigo
               in: path
               required: true
               schema:
-                    type: string 
+                    type: integer
+                    format: int64
                     description: The unique identifier for the user.
         delete:
             summary: Eliminar un amigo
             requestBody:
                 content:
-                    application/json:
+                    application/xml:
                         schema:
                             type: string 
                             description: The unique identifier for the user.
@@ -169,7 +173,7 @@ paths:
                 "200":
                     description: Amigo eliminado
                     content:
-                        application/json:
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/User"
     /users/{id}/messages:
@@ -179,7 +183,8 @@ paths:
               in: path
               required: true
               schema:
-                    type: string 
+                    type: integer
+                    format: int64
                     description: The unique identifier for the user.
         post:
             summary: Un usuario puede publicar un nuevo mensaje en su página personal
@@ -187,7 +192,7 @@ paths:
                 "200":
                     description: Mensaje publicado
                     content:
-                        application/json:
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Message"
         get:
@@ -197,7 +202,7 @@ paths:
                 "200":
                     description: Amigo eliminado
                     content:
-                        application/json:
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/PostList"
                 "404":
@@ -212,7 +217,8 @@ paths:
               in: path
               required: true
               schema:
-                    type: string 
+                    type: integer
+                    format: int64
                     description: The unique identifier for the user.
             - name: message_id
               description: Identificador del mensaje
@@ -227,7 +233,7 @@ paths:
                 "200":
                     description: Amigo eliminado
                     content:
-                        application/json:
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Message"
                 "404":
@@ -242,7 +248,7 @@ paths:
                 "200":
                     description: Mensaje editado
                     content:
-                        application/json:
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Message"
                 "404":
@@ -257,7 +263,7 @@ paths:
                 "200":
                     description: Mensaje eliminado
                     content:
-                        application/json:
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Message"
                 "404":
@@ -273,7 +279,8 @@ paths:
               in: path
               required: true
               schema:
-                    type: string 
+                    type: integer
+                    format: int64
                     description: The unique identifier for the user.
         get:
             x-summary: Consultar últimos mensajes publicados de amigos
@@ -282,7 +289,7 @@ paths:
                 "200":
                     description: Amigo eliminado
                     content:
-                        application/json:
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserList"
                 "404":
@@ -297,7 +304,8 @@ paths:
               in: path
               required: true
               schema:
-                    type: string 
+                    type: integer
+                    format: int64
                     description: The unique identifier for the user.
         get:
             x-summary: Buscar en mensajes de amigos
@@ -312,7 +320,7 @@ paths:
                 "200":
                     description: Amigo eliminado
                     content:
-                        application/json:
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserList"
                 "404":
@@ -326,7 +334,8 @@ components:
             type: object
             properties:
                 userId:
-                    type: string 
+                    type: integer
+                    format: int64
                     description: The unique identifier for the user.
                 name:
                     type: string
@@ -350,16 +359,18 @@ components:
                 users:
                     type: array
                     items:
-                          type: string 
-                    description: The unique identifier for the user.
+                        $ref: "#/components/schemas/User"
+                    description: An array of User objects.
             required:
                 - users
+
 
         Message:
             type: object
             properties:
                 messageId:
-                    type: string
+                    type: integer
+                    format: int64
                     description: The unique identifier for the post.
                 author:
                     type: string 
@@ -382,22 +393,13 @@ components:
                 - message
                 - time
 
-        MessageId:
-            type: object
-            properties:
-                messageId:
-                    type: string
-                    description: The unique identifier for the message.
-            required:
-                - messageId
-
         PostList:
             type: object
             properties:
                 posts:
                     type: array
                     items:
-                        type: string 
-                    description: The unique identifier for the message.
+                        $ref: "#/components/schemas/Message" 
+                    description: An array of Message objects.
             required:
                 - posts
